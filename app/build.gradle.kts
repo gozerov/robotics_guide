@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -36,13 +39,28 @@ android {
 }
 
 dependencies {
+    implementation(project(path = ":data"))
+    implementation(project(path = ":domain"))
+    implementation(project(path = ":presentation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+
+    implementation(libs.retrofit2)
+    implementation(libs.moshi.converter)
+    implementation(platform(libs.okhttp3.bom))
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.logging.interceptor)
+    implementation(libs.retrofit.result.adapter)
+
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
 }
