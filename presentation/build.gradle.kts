@@ -3,14 +3,17 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.navigation.safe.args)
 }
-
 android {
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+
     namespace = "ru.gozerov.presentation"
     compileSdk = 34
-
     defaultConfig {
+
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -33,17 +36,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
 }
 
 dependencies {
+    implementation(project(path = ":domain"))
+
     //Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

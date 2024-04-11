@@ -13,9 +13,16 @@
         android:name="ru.gozerov.presentation.screens.camera.QRCameraFragment"
         android:label="QRCameraFragment" />
 
-    <fragment
-        android:id="@id/nav_profile"
-        android:name="ru.gozerov.presentation.screens.profile.logged.ProfileFragment"
-        android:label="ProfileFragment" />
+    <navigation android:id="@+id/nav_profile"
+        app:startDestination="@id/profile">
+        <fragment
+            android:id="@+id/profile"
+            android:name="ru.gozerov.presentation.screens.profile.logged.ProfileFragment"
+            android:label="ProfileFragment" />
+        <fragment
+            android:id="@+id/authorizationFragment"
+            android:name="ru.gozerov.presentation.screens.profile.unlogged.AuthorizationFragment"
+            android:label="AuthorizationFragment" />
+    </navigation>
 
 </navigation>

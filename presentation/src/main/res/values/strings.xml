@@ -3,4 +3,7 @@
     <string name="assemblings">Сборки</string>
     <string name="camera">Камера</string>
     <string name="profile">Профиль</string>
+    <string name="search">Поиск</string>
+    <string name="new_assemblings">Новые сборки</string>
+    <string name="assembling_id_is">сборка № %1$d</string>
 </resources>
