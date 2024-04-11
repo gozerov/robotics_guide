@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.navigation.safe.args)
 }
 
 android {
@@ -32,10 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.2"
+    }
 }
 
 dependencies {
-
+    //Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -43,7 +52,24 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Hilt
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
+
+    //Navigation Component
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    //Jetpack Compose
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.compose.activity)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.viewbinding)
 
 }

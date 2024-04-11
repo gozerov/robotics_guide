@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Robotics Guide</string>
+    <string name="assemblings">Сборки</string>
+    <string name="camera">Камера</string>
+    <string name="profile">Профиль</string>
 </resources>

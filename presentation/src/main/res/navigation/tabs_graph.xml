@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tabs_graph"
+    app:startDestination="@id/nav_assembling">
+
+    <fragment
+        android:id="@id/nav_assembling"
+        android:name="ru.gozerov.presentation.screens.assembling.list.AssemblingListFragment"
+        android:label="AssemblingListFragment" />
+    <fragment
+        android:id="@id/nav_camera"
+        android:name="ru.gozerov.presentation.screens.camera.QRCameraFragment"
+        android:label="QRCameraFragment" />
+
+    <fragment
+        android:id="@id/nav_profile"
+        android:name="ru.gozerov.presentation.screens.profile.logged.ProfileFragment"
+        android:label="ProfileFragment" />
+
+</navigation>
