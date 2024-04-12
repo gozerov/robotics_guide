@@ -62,6 +62,7 @@ fun AssemblingListContainer(
                     parentPaddingValues = paddingValues,
                     onCardClick = onCardClick
                 )
+
         }
     }
 
