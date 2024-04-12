@@ -41,95 +41,43 @@ import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AssemblingListView(
+    assemblings: List<SimpleAssembling>,
     parentPaddingValues: PaddingValues,
-    searchFieldState: MutableState<String>,
-    onSearchTextChanged: (text: String) -> Unit,
+    onCardClick: (id: Int) -> Unit
 ) {
-    val assemblings = listOf(SimpleAssembling(1, "Робот-панда"), SimpleAssembling(1, "Робот-панда"), SimpleAssembling(1, "Робот-панда"))
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = RoboticsGuideTheme.colors.primaryBackground
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier.fillMaxSize()
+    Column(modifier = Modifier.fillMaxSize()) {
+        Text(
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+            text = stringResource(id = R.string.new_assemblings)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            Spacer(modifier = Modifier.height(8.dp))
-            SearchField(
-                textState = searchFieldState,
-                onSearchTextChanged = onSearchTextChanged,
-                hintStringRes = R.string.search
-            )
-            Text(
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp),
-                text = stringResource(id = R.string.new_assemblings)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
-            ) {
-                items(assemblings.size) {
-                    SmallAssemblingCard(assembling = assemblings[it])
-                }
+            items(assemblings.size) {
+                SmallAssemblingCard(
+                    assembling = assemblings[it],
+                    onCardClick = onCardClick
+                )
             }
-            Divider(
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                color = RoboticsGuideTheme.colors.secondaryBackground
-            )
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(16.dp)
-            ) {
-                items(assemblings.size) {
-                    AssemblingCard(assembling = assemblings[it])
-                }
+        }
+        Divider(
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
+            color = RoboticsGuideTheme.colors.secondaryBackground
+        )
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(16.dp)
+        ) {
+            items(assemblings.size) {
+                AssemblingCard(
+                    assembling = assemblings[it],
+                    onCardClick = onCardClick
+                )
             }
         }
     }
-}
 
-@Composable
-fun SearchField(
-    textState: MutableState<String>,
-    onSearchTextChanged: (text: String) -> Unit,
-    @StringRes hintStringRes: Int
-) {
-    OutlinedTextField(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .height(56.dp)
-            .fillMaxWidth(),
-        value = textState.value,
-        onValueChange = {
-            textState.value = it
-            onSearchTextChanged(it)
-        },
-        leadingIcon = {
-            Icon(
-                modifier = Modifier.padding(start = 8.dp),
-                imageVector = Icons.Default.Search,
-                contentDescription = null
-            )
-        },
-        singleLine = true,
-        textStyle = RoboticsGuideTheme.typography.body,
-        placeholder = {
-            Text(
-                text = if (textState.value.isNotBlank()) "" else stringResource(id = hintStringRes),
-            )
-        },
-        shape = CircleShape,
-        colors = TextFieldDefaults.colors(
-            focusedLabelColor = RoboticsGuideTheme.colors.tintColor,
-            focusedContainerColor = RoboticsGuideTheme.colors.secondaryBackground,
-            unfocusedContainerColor = RoboticsGuideTheme.colors.secondaryBackground,
-            focusedIndicatorColor = RoboticsGuideTheme.colors.secondaryBackground,
-            unfocusedIndicatorColor = RoboticsGuideTheme.colors.secondaryBackground,
-            cursorColor = RoboticsGuideTheme.colors.tintColor,
-            focusedTextColor = RoboticsGuideTheme.colors.primaryText,
-            unfocusedLabelColor = RoboticsGuideTheme.colors.secondaryText
-        ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-    )
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import ru.gozerov.presentation.R
+import ru.gozerov.presentation.screens.assembling.list.views.AssemblingListContainer
 import ru.gozerov.presentation.screens.assembling.list.views.AssemblingListView
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 
@@ -45,10 +46,11 @@ class AssemblingListFragment : Fragment() {
             modifier = Modifier.fillMaxSize(),
             containerColor = RoboticsGuideTheme.colors.primaryBackground
         ) { paddingValues ->
-            AssemblingListView(
+            AssemblingListContainer(
                 parentPaddingValues = paddingValues,
                 searchFieldState = searchFieldState,
-                onSearchTextChanged = {}
+                onSearchTextChanged = {},
+                onCardClick = {}
             )
         }
     }
