@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.navigation.safe.args.kotlin)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
 }

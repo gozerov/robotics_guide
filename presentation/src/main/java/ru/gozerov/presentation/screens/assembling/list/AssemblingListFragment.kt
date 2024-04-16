@@ -10,12 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gozerov.domain.models.assembling.SimpleAssembling
 import ru.gozerov.presentation.R
@@ -23,6 +24,7 @@ import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListEven
 import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListIntent
 import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListViewState
 import ru.gozerov.presentation.screens.assembling.list.views.AssemblingListContainer
+import ru.gozerov.presentation.screens.tabs.TabsFragmentDirections
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 
 @AndroidEntryPoint
@@ -35,7 +37,7 @@ class AssemblingListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_assembling_list, container, false)
+        val root = inflater.inflate(R.layout.fragment_composable, container, false)
         val composeView = root.findViewById<ComposeView>(R.id.composeView)
         composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -50,13 +52,13 @@ class AssemblingListFragment : Fragment() {
 
     @Composable
     fun AssemblingListScreen() {
-        val searchFieldState = remember { mutableStateOf("") }
+        val searchFieldState = rememberSaveable { mutableStateOf("") }
 
-        val newAssemblings = remember { mutableStateOf(emptyList<SimpleAssembling>()) }
-        val allAssemblings = remember { mutableStateOf(emptyList<SimpleAssembling>()) }
-        val searchedAssemblings = remember { mutableStateOf(emptyList<SimpleAssembling>()) }
-        val categories = remember { mutableStateOf(emptyList<String>()) }
-        val currentCategory = remember { mutableStateOf("") }
+        val newAssemblings = rememberSaveable { mutableStateOf(emptyList<SimpleAssembling>()) }
+        val allAssemblings = rememberSaveable { mutableStateOf(emptyList<SimpleAssembling>()) }
+        val searchedAssemblings = rememberSaveable { mutableStateOf(emptyList<SimpleAssembling>()) }
+        val categories = rememberSaveable { mutableStateOf(emptyList<String>()) }
+        val currentCategory = rememberSaveable { mutableStateOf("") }
 
         val viewState = viewModel.viewState.collectAsState().value
         val events = viewModel.events.collectAsState().value
@@ -86,7 +88,12 @@ class AssemblingListFragment : Fragment() {
                         )
                     )
                 },
-                onCardClick = {},
+                onCardClick = {
+                    val action =
+                        TabsFragmentDirections.actionTabsFragmentToAssemblingDetailsFragment(it)
+                    requireActivity().findNavController(R.id.globalFragmentContainer)
+                        .navigate(action)
+                },
                 onCategoryChanged = {
                     viewModel.handleIntent(
                         AssemblingListIntent.SearchAssembling(

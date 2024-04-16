@@ -7,6 +7,18 @@
     <fragment
         android:id="@+id/tabsFragment"
         android:name="ru.gozerov.presentation.screens.tabs.TabsFragment"
-        android:label="TabsFragment" />
+        android:label="TabsFragment" >
+        <action
+            android:id="@+id/action_tabsFragment_to_assemblingDetailsFragment"
+            app:destination="@id/assemblingDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/assemblingDetailsFragment"
+        android:name="ru.gozerov.presentation.screens.assembling.details.AssemblingDetailsFragment"
+        android:label="AssemblingDetailsFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

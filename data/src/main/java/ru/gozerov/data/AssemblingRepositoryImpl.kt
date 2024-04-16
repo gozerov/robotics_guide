@@ -64,7 +64,7 @@ class AssemblingRepositoryImpl @Inject constructor() : AssemblingRepository {
                 ),
                 Container(
                     1,
-                    Component(1, "Шестигранная гайка", null, "A-415"),
+                    Component(1, "Шестигранная gsfagfgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggгайка", null, "A-415"),
                     6
                 ),
                 Container(

@@ -6,4 +6,10 @@
     <string name="search">Поиск</string>
     <string name="new_assemblings">Новые сборки</string>
     <string name="assembling_id_is">сборка № %1$d</string>
+    <string name="amount_count">%1$s шт</string>
+    <string name="detail_name">Название детали</string>
+    <string name="detail_amount">Кол-во</string>
+    <string name="that_assembling_repeated_count">Эту сборку повторили %1$d раз</string>
+    <string name="check_components_availability">Проверить наличие компонентов</string>
+    <string name="collect_components">Собрать компоненты</string>
 </resources>
