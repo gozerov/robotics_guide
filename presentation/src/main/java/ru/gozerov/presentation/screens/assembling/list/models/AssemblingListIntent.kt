@@ -4,6 +4,11 @@ sealed interface AssemblingListIntent {
 
     object LoadAssemblings: AssemblingListIntent
 
+    object LoadCategories: AssemblingListIntent
 
+    class SearchAssembling(
+        val query: String,
+        val category: String
+    ): AssemblingListIntent
 
 }

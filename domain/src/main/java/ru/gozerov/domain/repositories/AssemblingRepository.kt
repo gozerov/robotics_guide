@@ -6,10 +6,12 @@ import ru.gozerov.domain.models.assembling.SimpleAssembling
 
 interface AssemblingRepository {
 
-    suspend fun getSimpleAssemblingList(): Result<List<SimpleAssembling>>
+    suspend fun getSimpleAssemblingList(): Pair<List<SimpleAssembling>, List<SimpleAssembling>>
 
-    suspend fun getAssemblingById(id: Int): Result<Assembling>
+    suspend fun getAssemblingById(id: Int): Assembling
 
     suspend fun searchAssembling(query: String, category: FilterCategory): List<SimpleAssembling>
+
+    suspend fun getCategories(): List<String>
 
 }

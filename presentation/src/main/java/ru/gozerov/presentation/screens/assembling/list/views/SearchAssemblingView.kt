@@ -2,75 +2,93 @@ package ru.gozerov.presentation.screens.assembling.list.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ru.gozerov.domain.models.assembling.SimpleAssembling
+import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 
 @Composable
 fun SearchAssemblingView(
     assemblings: List<SimpleAssembling>,
-    onCardClick: (id: Int) -> Unit
+    categories: List<String>,
+    currentCategory: MutableState<String>,
+    onCardClick: (id: Int) -> Unit,
+    onCategoryChanged: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val list = listOf("Популярные", "Новые")
-    var selected by remember { mutableStateOf(list[0]) }
+    val menuInteractionSource = remember { MutableInteractionSource() }
     Column {
-        Spacer(
+        Row(
             modifier = Modifier
-                .height(16.dp)
                 .fillMaxWidth()
-                .background(Color.Transparent)
-                .padding(10.dp)
-                .clickable(
-                    onClick = { expanded = !expanded }
-                )
-        )
-        DropdownMenu(
-            modifier = Modifier.fillMaxWidth(),
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                .clickable(menuInteractionSource, null) {
+                    expanded = !expanded
+                },
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            list.forEach { entry ->
-
-                DropdownMenuItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        selected = entry
-                        expanded = false
-                    },
-                    text = {
-                        Text(
-                            text = (entry),
-                            modifier = Modifier.wrapContentWidth().align(Alignment.Start))
-                    }
-                )
-            }
+            Text(
+                text = currentCategory.value,
+                color = RoboticsGuideTheme.colors.secondaryText
+            )
+            Icon(
+                modifier = Modifier.padding(start = 16.dp),
+                imageVector = Icons.Default.ArrowDropDown,
+                contentDescription = null
+            )
         }
-
+        if (expanded)
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .background(
+                        color = RoboticsGuideTheme.colors.secondaryBackground,
+                        RoundedCornerShape(8.dp)
+                    )
+            ) {
+                categories.forEach {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(MutableInteractionSource(), null) {
+                                currentCategory.value = it
+                                expanded = false
+                                onCategoryChanged()
+                            }
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(16.dp),
+                            text = it
+                        )
+                    }
+                }
+            }
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp)
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp)
         ) {
             items(assemblings.size) {
                 AssemblingCard(

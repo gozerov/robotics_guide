@@ -11,6 +11,10 @@ sealed interface AssemblingListViewState {
         val allAssemblings: List<SimpleAssembling>
     ): AssemblingListViewState
 
+    class SearchedAssemblings(
+        val assemblings: List<SimpleAssembling>
+    ): AssemblingListViewState
+
     object Error: AssemblingListViewState
 
 }

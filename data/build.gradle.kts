@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation(project(path = ":domain"))
+
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
 

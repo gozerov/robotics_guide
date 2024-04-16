@@ -8,6 +8,6 @@ data class Assembling(
     val containers: List<Container>,
     val fileLink: String,
     val instructionLink: String,
-    val user: User,
+    val user: User?,
     val readyAmount: Int
 )
