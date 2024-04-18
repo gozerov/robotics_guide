@@ -28,7 +28,7 @@ fun SmallAssemblingCard(
     Column(
         modifier = Modifier
             .width(184.dp)
-            .height(80.dp)
+            .height(100.dp)
             .background(
                 RoboticsGuideTheme.colors.secondaryBackground,
                 shape = RoundedCornerShape(8.dp)

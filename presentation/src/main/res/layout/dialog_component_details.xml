@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg"
+    android:paddingVertical="@dimen/_16dp">
+
+    <ImageView
+        android:id="@+id/imgComponent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_16dp"
+        android:src="@drawable/ic_component"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_48dp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_4dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/imgComponent"
+        app:layout_constraintEnd_toEndOf="@id/imgComponent"
+        app:layout_constraintStart_toStartOf="@id/imgComponent"
+        app:layout_constraintTop_toTopOf="@id/imgComponent"
+        tools:text="ID: 355" />
+
+    <TextView
+        android:id="@+id/txtComponentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/indigo_light"
+        android:textSize="@dimen/_32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgComponent"
+        app:layout_constraintTop_toTopOf="@id/imgComponent"
+        tools:text="Винт М3-20" />
+
+    <TextView
+        android:id="@+id/txtComponentRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgComponent"
+        app:layout_constraintTop_toBottomOf="@id/txtComponentName"
+        tools:text="Хранится в А-415" />
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp"
+        android:background="@drawable/bg_edit_button"
+        android:drawableLeft="@drawable/ic_edit_24"
+        android:drawablePadding="@dimen/_8dp"
+        android:paddingHorizontal="@dimen/_16dp"
+        android:text="@string/to_edit"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgComponent"
+        app:layout_constraintTop_toBottomOf="@id/txtComponentRoom" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

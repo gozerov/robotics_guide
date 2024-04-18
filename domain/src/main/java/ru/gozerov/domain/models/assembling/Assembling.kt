@@ -1,7 +1,10 @@
 package ru.gozerov.domain.models.assembling
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import ru.gozerov.domain.models.login.User
 
+@Parcelize
 data class Assembling(
     val id: Int,
     val name: String,
@@ -10,4 +13,4 @@ data class Assembling(
     val instructionLink: String,
     val user: User?,
     val readyAmount: Int
-)
+) : Parcelable

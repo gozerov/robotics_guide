@@ -11,7 +11,11 @@
     <fragment
         android:id="@id/nav_camera"
         android:name="ru.gozerov.presentation.screens.camera.QRCameraFragment"
-        android:label="QRCameraFragment" />
+        android:label="QRCameraFragment" >
+        <action
+            android:id="@+id/action_nav_camera_to_componentDetailsDialog"
+            app:destination="@id/componentDetailsDialog" />
+    </fragment>
 
     <navigation android:id="@+id/nav_profile"
         app:startDestination="@id/profile">
@@ -24,5 +28,13 @@
             android:name="ru.gozerov.presentation.screens.profile.unlogged.AuthorizationFragment"
             android:label="AuthorizationFragment" />
     </navigation>
+    <dialog
+        android:id="@+id/componentDetailsDialog"
+        android:name="ru.gozerov.presentation.screens.camera.ComponentDetailsDialog"
+        android:label="ComponentDetailsDialog" >
+        <argument
+            android:name="component"
+            app:argType="ru.gozerov.domain.models.assembling.Component" />
+    </dialog>
 
 </navigation>

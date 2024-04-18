@@ -12,4 +12,7 @@
     <string name="that_assembling_repeated_count">Эту сборку повторили %1$d раз</string>
     <string name="check_components_availability">Проверить наличие компонентов</string>
     <string name="collect_components">Собрать компоненты</string>
+    <string name="to_edit">Редактировать</string>
+    <string name="storing_in">Хранится в %1$s</string>
+    <string name="simple_id_is">ID: %1$d</string>
 </resources>
