@@ -14,11 +14,10 @@ import androidx.fragment.app.Fragment
 import ru.gozerov.domain.models.assembling.Component
 import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.presentation.R
-import ru.gozerov.presentation.databinding.FragmentComposableBinding
 import ru.gozerov.presentation.screens.assembling.assembly_process.views.AssemblyProcessView
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 
-class AssemblyProcessFragment: Fragment() {
+class AssemblyProcessFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
