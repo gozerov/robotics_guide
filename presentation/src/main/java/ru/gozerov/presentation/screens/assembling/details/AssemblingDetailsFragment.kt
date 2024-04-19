@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,8 +68,14 @@ class AssemblingDetailsFragment : Fragment() {
                     parentPaddingValues = paddingValues,
                     assembling = it,
                     onFavoriteClick = {},
-                    onCollectClick = {},
-                    onCheckAvailabilityClick = {},
+                    onCollectClick = {
+                        findNavController()
+                            .navigate(R.id.action_assemblingDetailsFragment_to_assemblyProcessFragment)
+                    },
+                    onCheckAvailabilityClick = {
+                        requireActivity().findNavController(R.id.globalFragmentContainer)
+                            .navigate(R.id.action_assemblingDetailsFragment_to_checkAvailabilityFragment)
+                    },
                     onNavUpClick = {
                         findNavController().popBackStack()
                     }

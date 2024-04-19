@@ -1,4 +1,4 @@
-package ru.gozerov.presentation.screens.camera
+package ru.gozerov.presentation.screens.assembling.check_availability.camera
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -11,12 +11,13 @@ import androidx.navigation.fragment.findNavController
 import ru.gozerov.domain.models.assembling.Component
 import ru.gozerov.presentation.R
 import ru.gozerov.presentation.databinding.FragmentQrCameraBinding
+import kotlin.random.Random
 
-class QRCameraFragment : Fragment(R.layout.fragment_qr_camera) {
+class CheckAvailabilityFragment : Fragment() {
 
     private lateinit var binding: FragmentQrCameraBinding
 
-    private val viewModel: QRCameraViewModel by viewModels()
+    private val viewModel: CheckAvailabilityViewModel by viewModels()
 
     @SuppressLint("RestrictedApi")
     override fun onCreateView(
@@ -34,17 +35,25 @@ class QRCameraFragment : Fragment(R.layout.fragment_qr_camera) {
         binding.barCodeView.statusView.text = ""
 
         binding.barCodeView.barcodeView.decodeContinuous {
-            if (viewModel.isCameraActive && findNavController().currentDestination == findNavController().findDestination(
-                    R.id.nav_camera
-                )
+            if (viewModel.isCameraActive && findNavController().currentDestination == findNavController()
+                    .findDestination(R.id.checkAvailabilityFragment)
             ) {
-                val action = QRCameraFragmentDirections.actionNavCameraToComponentDetailsDialog(
-                    Component(3, "Винт М3-20", null, "А-415")
+                viewModel.addComponent(
+                    Component(
+                        Random.nextInt(0, 100),
+                        "Винт М3-20",
+                        null,
+                        "A-415"
+                    )
                 )
+                val action =
+                    CheckAvailabilityFragmentDirections.actionCheckAvailabilityFragmentToCheckAvailabilityDialog(
+                        viewModel.components
+                    )
                 findNavController().navigate(action)
+
                 viewModel.isCameraActive = false
             }
-
         }
         binding.navUp.setOnClickListener {
             findNavController().popBackStack()
@@ -54,8 +63,9 @@ class QRCameraFragment : Fragment(R.layout.fragment_qr_camera) {
 
     companion object {
 
-        const val REQUEST_KEY = "requestKey"
+        const val REQUEST_KEY = "checkRequestKey"
 
     }
+
 
 }

@@ -19,6 +19,32 @@
         <argument
             android:name="id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_assemblingDetailsFragment_to_checkAvailabilityFragment"
+            app:destination="@id/checkAvailabilityFragment" />
+        <action
+            android:id="@+id/action_assemblingDetailsFragment_to_assemblyProcessFragment"
+            app:destination="@id/assemblyProcessFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/checkAvailabilityFragment"
+        android:name="ru.gozerov.presentation.screens.assembling.check_availability.camera.CheckAvailabilityFragment"
+        android:label="CheckAvailabilityFragment" >
+        <action
+            android:id="@+id/action_checkAvailabilityFragment_to_checkAvailabilityDialog"
+            app:destination="@id/checkAvailabilityDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/checkAvailabilityDialog"
+        android:name="ru.gozerov.presentation.screens.assembling.check_availability.dialog.CheckAvailabilityDialog"
+        android:label="CheckAvailabilityDialog" >
+        <argument
+            android:name="components"
+            app:argType="ru.gozerov.domain.models.assembling.Component[]" />
+    </dialog>
+    <fragment
+        android:id="@+id/assemblyProcessFragment"
+        android:name="ru.gozerov.presentation.screens.assembling.assembly_process.AssemblyProcessFragment"
+        android:label="AssemblyProcessFragment" />
 
 </navigation>
