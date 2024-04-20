@@ -1,6 +1,7 @@
 package ru.gozerov.data
 
 import ru.gozerov.domain.models.assembling.Assembling
+import ru.gozerov.domain.models.assembling.AssemblyStep
 import ru.gozerov.domain.models.assembling.Component
 import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.domain.models.assembling.FilterCategory
@@ -12,7 +13,7 @@ class AssemblingRepositoryImpl @Inject constructor() : AssemblingRepository {
 
     private val categories = listOf("Популярные", "Новые")
 
-    private val assemblingStub = listOf(
+    private val assemblingStub = mutableListOf(
         Assembling(
             1,
             "Робот-панда",
@@ -64,7 +65,12 @@ class AssemblingRepositoryImpl @Inject constructor() : AssemblingRepository {
                 ),
                 Container(
                     1,
-                    Component(1, "Шестигранная gsfagfgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggгайка", null, "A-415"),
+                    Component(
+                        1,
+                        "Шестигранная gsfagfgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggгайка",
+                        null,
+                        "A-415"
+                    ),
                     6
                 ),
                 Container(
@@ -76,6 +82,9 @@ class AssemblingRepositoryImpl @Inject constructor() : AssemblingRepository {
             null, 1
         )
     )
+
+    private var currentStep = 1
+    private var assemblingInProcess: Assembling? = null
 
     override suspend fun getSimpleAssemblingList(): Pair<List<SimpleAssembling>, List<SimpleAssembling>> {
         val assemblings = assemblingStub.map { it.toSimpleAssembling() }
@@ -99,6 +108,48 @@ class AssemblingRepositoryImpl @Inject constructor() : AssemblingRepository {
 
     override suspend fun getCategories(): List<String> {
         return categories
+    }
+
+    override suspend fun getCurrentStep(assemblingId: Int): AssemblyStep {
+        return if (assemblingInProcess != null) {
+            val assembling = requireNotNull(assemblingInProcess)
+            AssemblyStep(
+                container = assembling.containers[currentStep - 1],
+                step = currentStep,
+                stepCount = assembling.containers.size,
+                isFinish = currentStep == assembling.containers.size
+            )
+        } else {
+            val assembling = getAssemblingById(assemblingId)
+            assemblingInProcess = assembling
+            AssemblyStep(
+                container = assembling.containers[0],
+                step = currentStep,
+                stepCount = assembling.containers.size,
+                isFinish = currentStep == assembling.containers.size
+            )
+        }
+    }
+
+    override suspend fun nextStep(back: Boolean) {
+        if (back) {
+            if (currentStep == 1) {
+                assemblingInProcess = null
+                return
+            }
+            currentStep--
+        } else {
+            assemblingInProcess?.let {
+                if (it.containers.size == currentStep) {
+                    val assembling = requireNotNull(assemblingInProcess)
+                    assemblingStub[assemblingStub.indexOf(assembling)] =
+                        assembling.copy(readyAmount = assembling.readyAmount + 1)
+                    assemblingInProcess = null
+                    currentStep = 1
+                } else
+                    currentStep++
+            }
+        }
     }
 
 }

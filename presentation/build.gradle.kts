@@ -77,4 +77,7 @@ dependencies {
     //Zxing
     implementation(libs.zxing)
 
+    //Coil
+    implementation(libs.coil)
+
 }

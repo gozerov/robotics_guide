@@ -11,7 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Divider
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,7 +33,8 @@ fun AssemblingListView(
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
-            text = stringResource(id = R.string.new_assemblings)
+            text = stringResource(id = R.string.new_assemblings),
+            color = RoboticsGuideTheme.colors.outline
         )
         Spacer(modifier = Modifier.height(16.dp))
         LazyRow(
@@ -46,9 +48,9 @@ fun AssemblingListView(
                 )
             }
         }
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-            color = RoboticsGuideTheme.colors.secondaryBackground
+            color = RoboticsGuideTheme.colors.outlineVariant
         )
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),

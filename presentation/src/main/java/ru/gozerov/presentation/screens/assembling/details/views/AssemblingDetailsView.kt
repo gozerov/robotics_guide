@@ -1,10 +1,12 @@
 package ru.gozerov.presentation.screens.assembling.details.views
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,7 +38,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.gozerov.domain.models.assembling.Assembling
@@ -56,7 +63,7 @@ fun AssemblingDetailsView(
     val navUpInteractionSource = remember { MutableInteractionSource() }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = RoboticsGuideTheme.colors.primaryBackground
+        containerColor = RoboticsGuideTheme.colors.surfaceVariant
     ) { paddingValues ->
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -65,24 +72,30 @@ fun AssemblingDetailsView(
             Row(modifier = Modifier.fillMaxWidth()) {
                 Icon(
                     modifier = Modifier
-                        .padding(start = 8.dp, top = 16.dp)
-                        .size(24.dp)
+                        .padding(start = 16.dp, top = 16.dp)
+                        .size(36.dp)
                         .clickable(navUpInteractionSource, null) {
                             onNavUpClick()
                         },
+                    tint = RoboticsGuideTheme.colors.primary,
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null
                 )
                 Box(
                     modifier = Modifier
-                        .padding(top = 16.dp, end = 32.dp)
-                        .weight(1f),
+                        .weight(1f)
+                        .padding(top = 16.dp, start = 16.dp, end = 68.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 4.dp),
                         text = assembling.name,
                         fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Bold,
+                        color = RoboticsGuideTheme.colors.primary
                     )
                 }
             }
@@ -93,7 +106,7 @@ fun AssemblingDetailsView(
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        color = RoboticsGuideTheme.colors.secondaryBackground,
+                        color = RoboticsGuideTheme.colors.outlineVariant,
                         shape = RoundedCornerShape(8.dp)
                     )
             ) {
@@ -107,7 +120,7 @@ fun AssemblingDetailsView(
                         isBold = true
                     )
                     HorizontalDivider(
-                        color = RoboticsGuideTheme.colors.secondaryBackground
+                        color = RoboticsGuideTheme.colors.outlineVariant
                     )
                 }
                 items(assembling.containers.size) {
@@ -125,36 +138,72 @@ fun AssemblingDetailsView(
                         )
                         if (it != assembling.containers.size - 1) {
                             HorizontalDivider(
-                                color = RoboticsGuideTheme.colors.secondaryBackground
+                                color = RoboticsGuideTheme.colors.outlineVariant
                             )
                         }
                     }
                 }
             }
-            Text(
-                modifier = Modifier.padding(vertical = 36.dp),
-                text = stringResource(
-                    id = R.string.that_assembling_repeated_count,
-                    assembling.readyAmount
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 36.dp)
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(
+                        id = if (isSystemInDarkTheme()) R.drawable.ic_nut_left_dark_48 else R.drawable.ic_nut_left_48
+                    ),
+                    contentDescription = null
                 )
-            )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    val text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(color = RoboticsGuideTheme.colors.primary)) {
+                            append(stringResource(R.string.that_assembling_repeated))
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                color = RoboticsGuideTheme.colors.primary,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        ) {
+                            append(assembling.readyAmount.toString())
+                        }
+                        withStyle(style = SpanStyle(color = RoboticsGuideTheme.colors.primary)) {
+                            append(stringResource(R.string._count))
+                        }
+                    }
+                    Text(
+                        color = RoboticsGuideTheme.colors.primary,
+                        text = text
+                    )
+                }
+                Image(
+                    painter = painterResource(
+                        id = if (isSystemInDarkTheme()) R.drawable.ic_nut_right_dark_48 else R.drawable.ic_nut_right_48
+                    ),
+                    contentDescription = null
+                )
+            }
+
             Row(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth()
             ) {
                 IconButton(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .background(
-                            color = RoboticsGuideTheme.colors.secondaryBackground,
-                            shape = RoundedCornerShape(8.dp)
-                        ),
-                    colors = IconButtonDefaults.iconButtonColors(containerColor = RoboticsGuideTheme.colors.secondaryBackground),
+                    modifier = Modifier.size(48.dp),
+                    colors = IconButtonDefaults.iconButtonColors(containerColor = RoboticsGuideTheme.colors.surfaceContainerHighest),
                     onClick = { onFavoriteClick() }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_bookmark_border_24),
+                        tint = RoboticsGuideTheme.colors.primary,
                         contentDescription = null
                     )
                 }
@@ -164,20 +213,20 @@ fun AssemblingDetailsView(
                         .height(48.dp)
                         .weight(1f)
                         .background(
-                            color = RoboticsGuideTheme.colors.secondaryBackground,
+                            color = RoboticsGuideTheme.colors.surfaceContainerHighest,
                             shape = RoundedCornerShape(8.dp)
                         ),
-                    colors = ButtonDefaults.buttonColors(containerColor = RoboticsGuideTheme.colors.secondaryBackground),
+                    colors = ButtonDefaults.buttonColors(containerColor = RoboticsGuideTheme.colors.surfaceContainerHighest),
                     onClick = { onCollectClick() }) {
                     Icon(
                         modifier = Modifier.padding(horizontal = 8.dp),
                         painter = painterResource(id = R.drawable.ic_cutters_16),
                         contentDescription = null,
-                        tint = RoboticsGuideTheme.colors.primaryText
+                        tint = RoboticsGuideTheme.colors.primary
                     )
                     Text(
                         text = stringResource(id = R.string.collect_components),
-                        color = RoboticsGuideTheme.colors.primaryText
+                        color = RoboticsGuideTheme.colors.primary
                     )
                 }
             }
@@ -188,20 +237,20 @@ fun AssemblingDetailsView(
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth()
                     .background(
-                        color = RoboticsGuideTheme.colors.actionColor,
+                        color = RoboticsGuideTheme.colors.tertiary,
                         shape = RoundedCornerShape(8.dp)
                     ),
-                colors = ButtonDefaults.buttonColors(containerColor = RoboticsGuideTheme.colors.actionColor),
+                colors = ButtonDefaults.buttonColors(containerColor = RoboticsGuideTheme.colors.tertiary),
                 onClick = { onCheckAvailabilityClick() }) {
                 Icon(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     painter = painterResource(id = R.drawable.ic_qr_16),
                     contentDescription = null,
-                    tint = RoboticsGuideTheme.colors.secondaryBackgroundText
+                    tint = RoboticsGuideTheme.colors.surface
                 )
                 Text(
                     text = stringResource(id = R.string.check_components_availability),
-                    color = RoboticsGuideTheme.colors.secondaryBackgroundText
+                    color = RoboticsGuideTheme.colors.surface
                 )
             }
         }
@@ -226,10 +275,11 @@ fun CellWithoutDivider(
             Text(
                 maxLines = 2,
                 text = firstText,
+                color = RoboticsGuideTheme.colors.onSurface,
                 fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal
             )
         }
-        VerticalDivider(color = RoboticsGuideTheme.colors.secondaryBackground)
+        VerticalDivider(color = RoboticsGuideTheme.colors.outlineVariant)
         Box(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -239,6 +289,7 @@ fun CellWithoutDivider(
         ) {
             Text(
                 text = secondText,
+                color = RoboticsGuideTheme.colors.onSurface,
                 fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal
             )
         }

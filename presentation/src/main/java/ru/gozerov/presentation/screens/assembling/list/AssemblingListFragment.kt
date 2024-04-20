@@ -70,7 +70,7 @@ class AssemblingListFragment : Fragment() {
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            containerColor = RoboticsGuideTheme.colors.primaryBackground
+            containerColor = RoboticsGuideTheme.colors.surfaceVariant
         ) { paddingValues ->
             AssemblingListContainer(
                 newAssemblings = newAssemblings.value,

@@ -49,7 +49,7 @@ fun AssemblingListContainer(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = RoboticsGuideTheme.colors.primaryBackground
+        containerColor = RoboticsGuideTheme.colors.surfaceVariant
     ) { paddingValues ->
         Column(
             modifier = Modifier.fillMaxSize()
@@ -75,7 +75,6 @@ fun AssemblingListContainer(
                     parentPaddingValues = paddingValues,
                     onCardClick = onCardClick
                 )
-
         }
     }
 }
@@ -102,6 +101,7 @@ fun SearchField(
             Icon(
                 modifier = Modifier.padding(start = 8.dp),
                 imageVector = Icons.Default.Search,
+                tint = RoboticsGuideTheme.colors.primary,
                 contentDescription = null
             )
         },
@@ -110,6 +110,7 @@ fun SearchField(
         placeholder = {
             Text(
                 text = if (textState.value.isNotBlank()) "" else stringResource(id = hintStringRes),
+                color = RoboticsGuideTheme.colors.secondary
             )
         },
         trailingIcon = {
@@ -122,20 +123,20 @@ fun SearchField(
                             keyboardController?.hide()
                         },
                     imageVector = Icons.Default.Clear,
+                    tint = RoboticsGuideTheme.colors.primary,
                     contentDescription = null
                 )
             }
         },
         shape = CircleShape,
         colors = TextFieldDefaults.colors(
-            focusedLabelColor = RoboticsGuideTheme.colors.tintColor,
-            focusedContainerColor = RoboticsGuideTheme.colors.secondaryBackground,
-            unfocusedContainerColor = RoboticsGuideTheme.colors.secondaryBackground,
-            focusedIndicatorColor = RoboticsGuideTheme.colors.secondaryBackground,
-            unfocusedIndicatorColor = RoboticsGuideTheme.colors.secondaryBackground,
-            cursorColor = RoboticsGuideTheme.colors.tintColor,
-            focusedTextColor = RoboticsGuideTheme.colors.primaryText,
-            unfocusedLabelColor = RoboticsGuideTheme.colors.secondaryText
+            focusedContainerColor = RoboticsGuideTheme.colors.surfaceContainerHigh,
+            unfocusedContainerColor = RoboticsGuideTheme.colors.surfaceContainerHigh,
+            focusedIndicatorColor = RoboticsGuideTheme.colors.surfaceContainerHigh,
+            unfocusedIndicatorColor = RoboticsGuideTheme.colors.surfaceContainerHigh,
+            cursorColor = RoboticsGuideTheme.colors.primary,
+            focusedTextColor = RoboticsGuideTheme.colors.secondary,
+            unfocusedTextColor = RoboticsGuideTheme.colors.secondary
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
     )

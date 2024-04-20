@@ -45,6 +45,13 @@
     <fragment
         android:id="@+id/assemblyProcessFragment"
         android:name="ru.gozerov.presentation.screens.assembling.assembly_process.AssemblyProcessFragment"
-        android:label="AssemblyProcessFragment" />
+        android:label="AssemblyProcessFragment" >
+        <action
+            android:id="@+id/action_assemblyProcessFragment_self"
+            app:destination="@id/assemblyProcessFragment" />
+        <argument
+            android:name="assemblingId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

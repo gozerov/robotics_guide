@@ -50,11 +50,12 @@ fun SearchAssemblingView(
         ) {
             Text(
                 text = currentCategory.value,
-                color = RoboticsGuideTheme.colors.secondaryText
+                color = RoboticsGuideTheme.colors.outline
             )
             Icon(
                 modifier = Modifier.padding(start = 16.dp),
                 imageVector = Icons.Default.ArrowDropDown,
+                tint = RoboticsGuideTheme.colors.outline,
                 contentDescription = null
             )
         }
@@ -64,7 +65,7 @@ fun SearchAssemblingView(
                     .padding(16.dp)
                     .fillMaxWidth()
                     .background(
-                        color = RoboticsGuideTheme.colors.secondaryBackground,
+                        color = RoboticsGuideTheme.colors.primaryContainer,
                         RoundedCornerShape(8.dp)
                     )
             ) {
@@ -80,7 +81,8 @@ fun SearchAssemblingView(
                     ) {
                         Text(
                             modifier = Modifier.padding(16.dp),
-                            text = it
+                            text = it,
+                            color = RoboticsGuideTheme.colors.secondary
                         )
                     }
                 }

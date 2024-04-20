@@ -8,6 +8,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 
 data class RoboticsGuideColors(
+    val surfaceVariant: Color,
+    val surfaceContainer: Color,
+    val surfaceContainerHigh: Color,
+    val primary: Color,
+    val outline: Color,
+    val secondary: Color,
+    val outlineVariant: Color,
+    val primaryContainer: Color,
+    val onSurface: Color,
+    val surface: Color,
+    val tertiary: Color,
+    val surfaceContainerHighest: Color,
+
+
+
     val primaryText: Color,
     val primaryBackground: Color,
     val secondaryText: Color,
