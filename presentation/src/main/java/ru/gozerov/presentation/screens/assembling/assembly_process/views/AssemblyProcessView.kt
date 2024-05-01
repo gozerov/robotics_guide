@@ -1,7 +1,9 @@
 package ru.gozerov.presentation.screens.assembling.assembly_process.views
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -23,6 +26,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -51,14 +56,101 @@ internal fun AssemblyProcessView(
     step: Int,
     stepCount: Int,
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    isAudioPaused: Boolean,
+    isAudioOff: Boolean,
+    onPause: () -> Unit,
+    onOff: () -> Unit,
+    onRepeat: () -> Unit,
+    onDismiss: () -> Unit,
+    isMenuVisible: Boolean
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = RoboticsGuideTheme.colors.surfaceVariant
     ) { paddingValues ->
         Column {
-            AssemblyProcessToolbar(step = step, stepCount = stepCount, onBackClick = onBackClick)
+            AssemblyProcessToolbar(
+                step = step,
+                stepCount = stepCount,
+                onBackClick = onBackClick,
+                onSettingsClick = onSettingsClick
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.TopEnd)
+                    .padding(end = 16.dp)
+            ) {
+                if (isMenuVisible) {
+                    DropdownMenu(
+                        modifier = Modifier
+                            .width(200.dp)
+                            .background(RoboticsGuideTheme.colors.surfaceContainer)
+                            .clip(RoundedCornerShape(8.dp)),
+                        expanded = isMenuVisible,
+                        onDismissRequest = {
+                            onDismiss()
+                        }
+                    ) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(id = if (isAudioOff) R.string.turn_on else R.string.turn_off),
+                                    color = RoboticsGuideTheme.colors.primary
+                                )
+                            },
+                            onClick = {
+                                onOff()
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = if (isAudioOff) R.drawable.ic_volume_on_24 else R.drawable.ic_volume_off_24),
+                                    contentDescription = null,
+                                    tint = RoboticsGuideTheme.colors.primary
+                                )
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(id = if (isAudioPaused) R.string.continue_audio else R.string.pause),
+                                    color = RoboticsGuideTheme.colors.primary
+                                )
+                            },
+                            onClick = {
+                                onPause()
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = if (isAudioPaused) R.drawable.ic_play_arrow_24 else R.drawable.ic_pause_24),
+                                    contentDescription = null,
+                                    tint = RoboticsGuideTheme.colors.primary
+                                )
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(id = R.string.repeat),
+                                    color = RoboticsGuideTheme.colors.primary
+                                )
+                            },
+                            onClick = {
+                                onRepeat()
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_repeat_24),
+                                    contentDescription = null,
+                                    tint = RoboticsGuideTheme.colors.primary
+                                )
+                            }
+                        )
+                    }
+                }
+            }
             AssemblyProcessImageSection(container.component.imageUrl)
             ContainerCard(id = container.component.id, name = container.component.name)
             Box(
@@ -118,7 +210,12 @@ internal fun AssemblyProcessView(
 }
 
 @Composable
-internal fun AssemblyProcessToolbar(step: Int, stepCount: Int, onBackClick: () -> Unit) {
+internal fun AssemblyProcessToolbar(
+    step: Int,
+    stepCount: Int,
+    onBackClick: () -> Unit,
+    onSettingsClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -147,7 +244,7 @@ internal fun AssemblyProcessToolbar(step: Int, stepCount: Int, onBackClick: () -
             text = stringResource(id = R.string.step_is, step, stepCount)
         )
         IconButton(
-            onClick = { }
+            onClick = { onSettingsClick() }
         ) {
             Icon(
                 modifier = Modifier
@@ -266,5 +363,6 @@ internal fun ContainerCard(id: Int, name: String) {
                 contentDescription = null
             )
         }
+
     }
 }

@@ -23,4 +23,16 @@
     <string name="next">Далее</string>
     <string name="that_assembling_repeated">"Эту сборку повторили "</string>
     <string name="_count">" раз"</string>
+    <string name="login">Войти</string>
+    <string name="turn_off">Выключить</string>
+    <string name="turn_on">Включить</string>
+    <string name="pause">Пауза</string>
+    <string name="continue_audio">Продолжить</string>
+    <string name="repeat">Повторить</string>
+    <string name="_off">выключи</string>
+    <string name="_on">включи</string>
+    <string name="_pause">пауза</string>
+    <string name="_continue">продолжи</string>
+    <string name="_repeat">повтори</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>

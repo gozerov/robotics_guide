@@ -22,6 +22,7 @@ compose = "1.8.2"
 compose-bom = "2024.04.00"
 compose-material = "1.6.5"
 zxing = "4.3.0"
+vosk-android = "0.3.32"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,6 +65,8 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-ui-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding" }
 
 zxing = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing" }
+
+vosk-android = { group = "com.alphacephei", name = "vosk-android", version.ref = "vosk-android" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

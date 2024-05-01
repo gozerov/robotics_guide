@@ -3,12 +3,17 @@ package ru.gozerov.presentation.screens.assembling.assembly_process
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.gozerov.domain.use_cases.GetCurrentStepUseCase
 import ru.gozerov.domain.use_cases.MoveOnNextStepUseCase
+import ru.gozerov.presentation.screens.assembling.assembly_process.models.AssemblyProcessEffect
 import ru.gozerov.presentation.screens.assembling.assembly_process.models.AssemblyProcessIntent
 import ru.gozerov.presentation.screens.assembling.assembly_process.models.AssemblyProcessViewState
 import ru.gozerov.presentation.utils.runCatchingNonCancellation
@@ -24,6 +29,12 @@ class AssemblyProcessViewModel @Inject constructor(
         MutableStateFlow<AssemblyProcessViewState>(AssemblyProcessViewState.Empty)
     val viewState: StateFlow<AssemblyProcessViewState>
         get() = _viewState.asStateFlow()
+
+    private val _effects =
+        MutableSharedFlow<AssemblyProcessEffect>(1, 0, BufferOverflow.DROP_OLDEST)
+
+    val effects: SharedFlow<AssemblyProcessEffect>
+        get() = _effects.asSharedFlow()
 
     fun handleIntent(intent: AssemblyProcessIntent) {
         viewModelScope.launch {
@@ -47,6 +58,24 @@ class AssemblyProcessViewModel @Inject constructor(
                         .onFailure {
                             _viewState.emit(AssemblyProcessViewState.Error())
                         }
+                }
+
+                is AssemblyProcessIntent.SetEnabled -> {
+                    when (intent.enabled) {
+                        true -> _effects.emit(AssemblyProcessEffect.RecordOn())
+                        false -> _effects.emit(AssemblyProcessEffect.RecordOff())
+                    }
+                }
+
+                is AssemblyProcessIntent.SetPause -> {
+                    when (intent.paused) {
+                        true -> _effects.emit(AssemblyProcessEffect.RecordPaused())
+                        false -> _effects.emit(AssemblyProcessEffect.RecordContinued())
+                    }
+                }
+
+                is AssemblyProcessIntent.RepeatRecord -> {
+                    _effects.emit(AssemblyProcessEffect.RepeatRecord())
                 }
             }
         }

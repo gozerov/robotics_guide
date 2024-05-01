@@ -14,7 +14,6 @@ android {
     namespace = "ru.gozerov.presentation"
     compileSdk = 34
     defaultConfig {
-
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -45,6 +44,7 @@ android {
 
 dependencies {
     implementation(project(path = ":domain"))
+    implementation(project(path = ":models"))
 
     //Core
     implementation(libs.androidx.core.ktx)
@@ -79,5 +79,9 @@ dependencies {
 
     //Coil
     implementation(libs.coil)
+
+    //Vosk
+    implementation(libs.vosk.android)
+    implementation("net.java.dev.jna:jna:5.13.0@aar")
 
 }

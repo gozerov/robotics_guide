@@ -6,4 +6,10 @@ sealed interface AssemblyProcessIntent {
 
     class MoveOnNext(val isBack: Boolean) : AssemblyProcessIntent
 
+    class SetPause(val paused: Boolean) : AssemblyProcessIntent
+
+    class SetEnabled(val enabled: Boolean) : AssemblyProcessIntent
+
+    class RepeatRecord: AssemblyProcessIntent
+
 }
