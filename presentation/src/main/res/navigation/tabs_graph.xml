@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_nav_camera_to_componentDetailsDialog"
             app:destination="@id/componentDetailsDialog" />
+        <action
+            android:id="@+id/action_nav_camera_to_containerDetailsDialog"
+            app:destination="@id/containerDetailsDialog" />
     </fragment>
 
     <navigation android:id="@+id/nav_profile"
@@ -30,11 +33,19 @@
     </navigation>
     <dialog
         android:id="@+id/componentDetailsDialog"
-        android:name="ru.gozerov.presentation.screens.camera.ComponentDetailsDialog"
+        android:name="ru.gozerov.presentation.screens.camera.dialogs.ComponentDetailsDialog"
         android:label="ComponentDetailsDialog" >
         <argument
             android:name="component"
             app:argType="ru.gozerov.domain.models.assembling.Component" />
+    </dialog>
+    <dialog
+        android:id="@+id/containerDetailsDialog"
+        android:name="ru.gozerov.presentation.screens.camera.dialogs.ContainerDetailsDialog"
+        android:label="ContainerDetailsDialog" >
+        <argument
+            android:name="container"
+            app:argType="ru.gozerov.domain.models.assembling.Container" />
     </dialog>
 
 </navigation>

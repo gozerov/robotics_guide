@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_24dp"
+        android:background="@drawable/bg_compare_table_dialog"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
+            android:text="@string/oops"
+            android:textColor="@color/secondary"
+            android:textSize="@dimen/_20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
+            android:gravity="center"
+            android:text="@string/are_you_sure_to_continue"
+            android:textColor="@color/secondary" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_wire" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@id/dismissButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="@dimen/_12dp"
+                android:text="@string/back_and_dismiss"
+                android:textColor="#CD3121" />
+
+            <TextView
+                android:id="@+id/continueButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="@dimen/_12dp"
+                android:text="@string/continue_audio"
+                android:textColor="#69B547" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

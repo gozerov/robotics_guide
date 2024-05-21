@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_component_dialog">
+
+    <ImageView
+        android:id="@+id/imgComponent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_4dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/imgComponent"
+        app:layout_constraintEnd_toEndOf="@id/imgComponent"
+        app:layout_constraintTop_toTopOf="@id/imgComponent"
+        tools:text="ID: 355" />
+
+    <TextView
+        android:id="@+id/txtContainerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:textColor="@color/indigo_light"
+        android:textSize="@dimen/_32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/imgComponent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Контейнер № 19" />
+
+    <TextView
+        android:id="@+id/txtDetailsCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp"
+        android:gravity="end"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_24sp"
+        app:layout_constraintEnd_toEndOf="@id/txtContainerName"
+        app:layout_constraintStart_toEndOf="@id/imgComponent"
+        app:layout_constraintTop_toBottomOf="@id/txtContainerName"
+        tools:text="Деталей:\n12 шт" />
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp"
+        android:layout_marginBottom="@dimen/_24dp"
+        android:background="@drawable/bg_edit_button"
+        android:drawableLeft="@drawable/ic_edit_24"
+        android:drawablePadding="@dimen/_8dp"
+        android:paddingHorizontal="@dimen/_16dp"
+        android:text="@string/to_edit"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/txtContainerName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

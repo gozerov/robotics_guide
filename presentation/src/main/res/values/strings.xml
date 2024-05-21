@@ -35,4 +35,12 @@
     <string name="_continue">продолжи</string>
     <string name="_repeat">повтори</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="unexpected_component_id">Unexpected component id</string>
+    <string name="found_components">Найденные компоненты</string>
+    <string name="ok">Ок</string>
+    <string name="oops">Ой!</string>
+    <string name="are_you_sure_to_continue">Найдены не все компоненты.\nВы уверены, что хотите \nпродолжить?</string>
+    <string name="back_and_dismiss">Вернуться</string>
+    <string name="container_is">Контейнер №%1$d</string>
+    <string name="details_count_is">Деталей:\\n%1$d шт</string>
 </resources>

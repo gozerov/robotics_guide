@@ -109,7 +109,17 @@ class AssemblingDetailsFragment : Fragment() {
                         findNavController().navigate(action)
                     },
                     onCheckAvailabilityClick = {
-                        findNavController().navigate(R.id.action_assemblingDetailsFragment_to_checkAvailabilityFragment)
+                        val components =
+                            assembling.value?.containers?.map { container -> container.component }
+                                ?.sortedBy { component -> component.name }?.toTypedArray()
+                        components?.let { array ->
+                            val action =
+                                AssemblingDetailsFragmentDirections.actionAssemblingDetailsFragmentToCheckAvailabilityFragment(
+                                    array,
+                                    assembling.value!!.id
+                                )
+                            findNavController().navigate(action)
+                        }
                     },
                     onNavUpClick = {
                         findNavController().popBackStack()

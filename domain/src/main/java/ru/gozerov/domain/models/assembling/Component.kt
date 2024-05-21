@@ -9,4 +9,4 @@ data class Component(
     val name: String,
     val imageUrl: String?,
     val room: String
-): Parcelable, TableData
+): Parcelable

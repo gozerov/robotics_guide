@@ -152,4 +152,16 @@ class AssemblingRepositoryImpl @Inject constructor() : AssemblingRepository {
         }
     }
 
+    override suspend fun getComponentById(id: Int): Component {
+        return Component(1, "Шестигранная гайка", null, "A-415")
+    }
+
+    override suspend fun getContainerById(id: Int): Container {
+        return Container(
+            1,
+            Component(1, "Шестигранная гайка", null, "A-415"),
+            10
+        )
+    }
+
 }

@@ -1,0 +1,38 @@
+package ru.gozerov.presentation.screens.camera.dialogs
+
+import android.content.DialogInterface
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ru.gozerov.presentation.R
+import ru.gozerov.presentation.databinding.DialogContainerDetailsBinding
+import ru.gozerov.presentation.screens.camera.QRCameraFragment
+
+class ContainerDetailsDialog : BottomSheetDialogFragment() {
+
+    private lateinit var binding: DialogContainerDetailsBinding
+
+    private val args by navArgs<ContainerDetailsDialogArgs>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DialogContainerDetailsBinding.inflate(inflater, container, false)
+        binding.txtContainerName.text =
+            getString(R.string.container_is, args.container.component.id)
+        binding.txtDetailsCount.text = getString(R.string.details_count_is, args.container.amount)
+        return binding.root
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        parentFragmentManager.setFragmentResult(QRCameraFragment.REQUEST_KEY, bundleOf())
+        super.onDismiss(dialog)
+    }
+
+}
