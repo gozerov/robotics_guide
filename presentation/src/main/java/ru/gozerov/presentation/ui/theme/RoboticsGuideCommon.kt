@@ -20,19 +20,9 @@ data class RoboticsGuideColors(
     val surface: Color,
     val tertiary: Color,
     val surfaceContainerHighest: Color,
-
-
-
-    val primaryText: Color,
-    val primaryBackground: Color,
-    val secondaryText: Color,
-    val secondaryBackground: Color,
-    val tintColor: Color,
-    val controlColor: Color,
-    val secondaryBackgroundText: Color,
-    val errorColor: Color,
-    val actionColor: Color,
-    val statusBarColor: Color
+    val onSurfaceVariant: Color,
+    val dividerColor: Color,
+    val secondaryContainer: Color,
 )
 
 data class RoboticsGuideTypography(

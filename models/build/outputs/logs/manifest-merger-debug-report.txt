@@ -1,16 +1,16 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml:2:13-83
-INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml:2:13-83
+ADDED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml:2:13-83
+INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml:2:13-83
 	package
-		INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml
+		INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml
 	xmlns:android
-		ADDED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml:2:23-81
+		ADDED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml:2:23-81
 uses-sdk
-INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml reason: use-sdk injection requested
-INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml
-INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml
+INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml reason: use-sdk injection requested
+INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml
+INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml
 	android:targetSdkVersion
-		INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml
+		INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml
 	android:minSdkVersion
-		INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16653337137444633882.xml
+		INJECTED from /Users/grigory/StudioProjects/android-assemble/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16370706685366856434.xml

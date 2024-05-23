@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -65,26 +66,31 @@ fun SearchAssemblingView(
                     .padding(16.dp)
                     .fillMaxWidth()
                     .background(
-                        color = RoboticsGuideTheme.colors.primaryContainer,
+                        color = RoboticsGuideTheme.colors.secondaryContainer,
                         RoundedCornerShape(8.dp)
                     )
             ) {
-                categories.forEach {
+                categories.forEachIndexed { ind, value ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable(MutableInteractionSource(), null) {
-                                currentCategory.value = it
+                                currentCategory.value = value
                                 expanded = false
                                 onCategoryChanged()
                             }
                     ) {
                         Text(
                             modifier = Modifier.padding(16.dp),
-                            text = it,
+                            text = value,
                             color = RoboticsGuideTheme.colors.secondary
                         )
                     }
+                    if (ind < categories.lastIndex)
+                        HorizontalDivider(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            color = RoboticsGuideTheme.colors.dividerColor
+                        )
                 }
             }
         LazyColumn(
@@ -92,9 +98,9 @@ fun SearchAssemblingView(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp)
         ) {
-            items(assemblings.size) {
+            items(assemblings.size) { ind ->
                 AssemblingCard(
-                    assembling = assemblings[it],
+                    assembling = assemblings[ind],
                     onCardClick = onCardClick
                 )
             }

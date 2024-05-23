@@ -2,6 +2,7 @@ package ru.gozerov.presentation.screens.camera
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,6 +14,7 @@ import ru.gozerov.presentation.screens.camera.models.QRCameraIntent
 import ru.gozerov.presentation.utils.runCatchingNonCancellation
 import javax.inject.Inject
 
+@HiltViewModel
 class QRCameraViewModel @Inject constructor(
     private val getComponentByIdUseCase: GetComponentByIdUseCase,
     private val getContainerByIdUseCase: GetContainerByIdUseCase

@@ -24,8 +24,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/nav_menu"
-        app:itemTextColor="@color/black"
-        app:itemIconTint="@color/black"
-        android:background="@color/white"/>
+        app:itemPaddingTop="@dimen/_8dp"
+        android:paddingVertical="@dimen/_4dp"
+        app:itemActiveIndicatorStyle="@style/Menu.Indicator"
+        app:itemRippleColor="@color/surface"
+        app:itemTextColor="@color/secondary"
+        app:itemIconTint="@color/secondary"
+        android:background="@color/surface"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

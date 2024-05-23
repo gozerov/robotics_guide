@@ -12,13 +12,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.gozerov.presentation.R
 import ru.gozerov.presentation.databinding.FragmentQrCameraBinding
 import ru.gozerov.presentation.screens.camera.models.QRCameraEffect
 import ru.gozerov.presentation.screens.camera.models.QRCameraIntent
 
-class QRCameraFragment : Fragment(R.layout.fragment_qr_camera) {
+@AndroidEntryPoint
+class QRCameraFragment : Fragment() {
 
     private lateinit var binding: FragmentQrCameraBinding
 

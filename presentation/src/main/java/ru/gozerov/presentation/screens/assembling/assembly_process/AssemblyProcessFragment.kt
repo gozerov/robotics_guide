@@ -172,8 +172,10 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
     }
 
     private fun setErrorState() {
-        Snackbar.make(requireView(), getString(R.string.unknown_error), Snackbar.LENGTH_SHORT)
-            .show()
+        view?.let { v ->
+            Snackbar.make(v, getString(R.string.unknown_error), Snackbar.LENGTH_SHORT)
+                .show()
+        }
     }
 
     override fun onPause() {

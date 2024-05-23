@@ -1,5 +1,6 @@
-package ru.gozerov.data
+package ru.gozerov.data.assembling
 
+import ru.gozerov.data.toSimpleAssembling
 import ru.gozerov.domain.models.assembling.Assembling
 import ru.gozerov.domain.models.assembling.AssemblyStep
 import ru.gozerov.domain.models.assembling.Component

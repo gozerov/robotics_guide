@@ -95,14 +95,14 @@ class CheckAvailabilityFragment : Fragment() {
         return binding.root
     }
 
-    override fun onPause() {
-        binding.barCodeView.pause()
-        super.onPause()
-    }
-
     override fun onResume() {
         binding.barCodeView.resume()
         super.onResume()
+    }
+
+    override fun onPause() {
+        binding.barCodeView.pause()
+        super.onPause()
     }
 
     companion object {

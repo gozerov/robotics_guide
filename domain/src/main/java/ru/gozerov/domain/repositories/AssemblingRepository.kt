@@ -1,5 +1,6 @@
 package ru.gozerov.domain.repositories
 
+import android.net.Uri
 import ru.gozerov.domain.models.assembling.Assembling
 import ru.gozerov.domain.models.assembling.AssemblyStep
 import ru.gozerov.domain.models.assembling.Component
@@ -22,6 +23,8 @@ interface AssemblingRepository {
     suspend fun nextStep(back: Boolean = false)
 
     suspend fun getComponentById(id: Int): Component
+
+    suspend fun updateComponent(name: String, uri: Uri?)
 
     suspend fun getContainerById(id: Int): Container
 

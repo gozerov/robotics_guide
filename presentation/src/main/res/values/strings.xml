@@ -43,4 +43,5 @@
     <string name="back_and_dismiss">Вернуться</string>
     <string name="container_is">Контейнер №%1$d</string>
     <string name="details_count_is">Деталей:\\n%1$d шт</string>
+    <string name="saved_assemblings_available_auth">Сохранённые сборки доступны только авторизованным пользователям</string>
 </resources>

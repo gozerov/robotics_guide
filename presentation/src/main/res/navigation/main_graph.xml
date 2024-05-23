@@ -11,6 +11,12 @@
         <action
             android:id="@+id/action_tabsFragment_to_assemblingDetailsFragment"
             app:destination="@id/assemblingDetailsFragment" />
+        <action
+            android:id="@+id/action_tabsFragment_to_loginWebViewFragment"
+            app:destination="@id/loginWebViewFragment" />
+        <action
+            android:id="@+id/action_tabsFragment_to_editComponentFragment"
+            app:destination="@id/editComponentFragment" />
     </fragment>
     <fragment
         android:id="@+id/assemblingDetailsFragment"
@@ -93,5 +99,20 @@
         <argument android:name="assemblingId"
             app:argType="integer" />
     </dialog>
+    <fragment
+        android:id="@+id/loginWebViewFragment"
+        android:name="ru.gozerov.presentation.screens.profile.unlogged.webview.LoginWebViewFragment"
+        android:label="LoginWebViewFragment" />
+    <fragment
+        android:id="@+id/editComponentFragment"
+        android:name="ru.gozerov.presentation.screens.camera.edit.edit_component.EditComponentFragment"
+        android:label="EditComponentFragment" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

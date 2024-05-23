@@ -15,18 +15,9 @@ val baseLightPalette = RoboticsGuideColors(
     surface = Color(0xFFFBF8FF),
     tertiary = Color(0xFF90A785),
     surfaceContainerHighest = Color(0xFFD0CEDE),
-
-
-    primaryBackground = Color(0xFFFFFFFF),
-    primaryText = Color(0xFF000000),
-    secondaryBackground = Color(0xFFF5F5F5),
-    secondaryText = Color(0xFF808080),
-    tintColor = Color(0xFF2196F3),
-    controlColor = Color(0xFF000000),
-    secondaryBackgroundText = Color(0xFFFFFFFF),
-    errorColor = Color(0xFFFF3377),
-    actionColor = Color(0xFF33CB26),
-    statusBarColor = Color(0xFFFFFFFF)
+    onSurfaceVariant = Color(0xFF45464F),
+    dividerColor = Color(0xFFA4A7BD),
+    secondaryContainer = Color(0xFFB1B4CD)
 )
 
 val baseDarkPalette = RoboticsGuideColors(
@@ -42,16 +33,7 @@ val baseDarkPalette = RoboticsGuideColors(
     surface = Color(0xFF121318),
     tertiary = Color(0xFF90A785),
     surfaceContainerHighest = Color(0xFF34343A),
-
-
-    primaryBackground = Color(0xFF23282D),
-    primaryText = Color(0xFFFFFFFF),
-    secondaryBackground = Color(0xFF191E23),
-    secondaryText = Color(0xFF808080),
-    tintColor = Color(0xFF2196F3),
-    controlColor = Color(0xFF000000),
-    secondaryBackgroundText = Color(0xFFFFFFFF),
-    errorColor = Color(0xFFFF6699),
-    actionColor = Color(0xFF33CB26),
-    statusBarColor = Color(0xFF23282D)
+    onSurfaceVariant = Color(0xFFC6C5D0),
+    dividerColor = Color(0xFF5A5D72),
+    secondaryContainer = Color(0xFF424659)
 )
