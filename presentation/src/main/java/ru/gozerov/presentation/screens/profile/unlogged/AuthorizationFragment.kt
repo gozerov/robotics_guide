@@ -81,7 +81,7 @@ class AuthorizationFragment : Fragment() {
         when (effect) {
             is AuthorizationEffect.None -> {}
             is AuthorizationEffect.NavigateToProfile -> {
-                findNavController().navigate(R.id.action_authorizationFragment_to_profile)
+                findNavController().popBackStack()
             }
 
             is AuthorizationEffect.Error -> {

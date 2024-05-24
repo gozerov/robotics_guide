@@ -203,7 +203,7 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
         ) { paddingValues ->
             currentStep.value?.run {
                 AssemblyProcessView(parentPaddingValues = paddingValues,
-                    container = container,
+                    component = container,
                     step = step,
                     stepCount = stepCount,
                     onBackClick = {

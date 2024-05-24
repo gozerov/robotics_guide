@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +32,7 @@ import ru.gozerov.presentation.R
 import ru.gozerov.presentation.screens.assembling.details.models.AssemblingDetailsIntent
 import ru.gozerov.presentation.screens.assembling.details.models.AssemblingDetailsViewState
 import ru.gozerov.presentation.screens.assembling.details.views.AssemblingDetailsView
+import ru.gozerov.presentation.screens.profile.unlogged.views.LoadingView
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 
 @AndroidEntryPoint
@@ -70,6 +72,8 @@ class AssemblingDetailsFragment : Fragment() {
             showSnackbar = true
         }
 
+        val successMessage = stringResource(R.string.on_assembling_repeat)
+
         val assembling = remember { mutableStateOf<Assembling?>(null) }
         val viewState = viewModel.viewState.collectAsState().value
 
@@ -82,7 +86,7 @@ class AssemblingDetailsFragment : Fragment() {
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.handleIntent(AssemblingDetailsIntent.LoadAssembling(args.id))
                     snackbarHostState.showSnackbar(
-                        message = "Вы повторили сборку",
+                        message = successMessage,
                         duration = SnackbarDuration.Short
                     )
                 }
@@ -110,8 +114,7 @@ class AssemblingDetailsFragment : Fragment() {
                     },
                     onCheckAvailabilityClick = {
                         val components =
-                            assembling.value?.containers?.map { container -> container.component }
-                                ?.sortedBy { component -> component.name }?.toTypedArray()
+                            assembling.value?.components?.sortedBy { component -> component.name }?.toTypedArray()
                         components?.let { array ->
                             val action =
                                 AssemblingDetailsFragmentDirections.actionAssemblingDetailsFragmentToCheckAvailabilityFragment(
@@ -125,7 +128,7 @@ class AssemblingDetailsFragment : Fragment() {
                         findNavController().popBackStack()
                     }
                 )
-            }
+            } ?: LoadingView()
         }
         when (viewState) {
             is AssemblingDetailsViewState.Empty -> {}

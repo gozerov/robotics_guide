@@ -5,6 +5,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.gozerov.data.assembling.AssemblingRepositoryImpl
+import ru.gozerov.data.assembling.cache.AssemblingStorage
+import ru.gozerov.data.assembling.cache.AssemblingStorageImpl
 import ru.gozerov.data.login.LoginRepositoryImpl
 import ru.gozerov.data.login.cache.LoginStorage
 import ru.gozerov.data.login.cache.LoginStorageImpl
@@ -22,10 +24,14 @@ interface AppBindModule {
 
     @Binds
     @Singleton
-    fun binLoginRepoImplLoginRepo(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
+    fun bindLoginRepoImplLoginRepo(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
 
     @Binds
     @Singleton
-    fun binLoginStorageImplLoginStorage(loginStorageImpl: LoginStorageImpl): LoginStorage
+    fun bindLoginStorageImplLoginStorage(loginStorageImpl: LoginStorageImpl): LoginStorage
+
+    @Binds
+    @Singleton
+    fun bindAssemblingStorageImplAssemblingStorage(assemblingStorageImpl: AssemblingStorageImpl): AssemblingStorage
 
 }

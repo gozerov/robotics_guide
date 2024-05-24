@@ -1,5 +1,6 @@
 package ru.gozerov.presentation.utils
 
+import android.net.http.HttpException
 import java.lang.Exception
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -8,7 +9,8 @@ inline fun <R> runCatchingNonCancellation(block: () -> R): Result<R> {
         Result.success(block())
     } catch (e: CancellationException) {
         throw e
-    } catch (e: Exception) {
+    }
+    catch (e: Exception) {
         Result.failure(e)
     }
 }

@@ -60,16 +60,26 @@ class CheckAvailabilityDialog : BottomSheetDialogFragment() {
 
         binding.showAllButton.setOnClickListener {
             val foundComponents = data.filterIsInstance<ComponentWithNeed>().toTypedArray()
-            val action = CheckAvailabilityDialogDirections.actionCheckAvailabilityDialogToCompareTableDialog(foundComponents, args.neededComponents)
+            val action =
+                CheckAvailabilityDialogDirections.actionCheckAvailabilityDialogToCompareTableDialog(
+                    foundComponents,
+                    args.neededComponents
+                )
             findNavController().navigate(action)
         }
 
         binding.calculateButton.setOnClickListener {
             if (checkAvailability()) {
-                val action = CheckAvailabilityDialogDirections.actionCheckAvailabilityDialogToAssemblyProcessFragment(args.assemblingId)
+                val action =
+                    CheckAvailabilityDialogDirections.actionCheckAvailabilityDialogToAssemblyProcessFragment(
+                        args.assemblingId
+                    )
                 findNavController().navigate(action)
             } else {
-                val action = CheckAvailabilityDialogDirections.actionCheckAvailabilityDialogToLackOfComponentsDialog(args.assemblingId)
+                val action =
+                    CheckAvailabilityDialogDirections.actionCheckAvailabilityDialogToLackOfComponentsDialog(
+                        args.assemblingId
+                    )
                 findNavController().navigate(action)
             }
         }
@@ -77,7 +87,7 @@ class CheckAvailabilityDialog : BottomSheetDialogFragment() {
 
     private fun checkAvailability(): Boolean {
         args.neededComponents.forEach { component ->
-            if (args.components.none { it.component.id == component.id })
+            if (args.components.none { it.component.id == component.componentId })
                 return false
         }
         return true

@@ -12,6 +12,6 @@
         android:paddingHorizontal="@dimen/_4dp"
         android:layout_marginVertical="@dimen/_16dp"
         tools:text="Винт М3-20"
-        android:textColor="@color/black"/>
+        android:textColor="@color/onSurfaceVariant"/>
 
 </FrameLayout>

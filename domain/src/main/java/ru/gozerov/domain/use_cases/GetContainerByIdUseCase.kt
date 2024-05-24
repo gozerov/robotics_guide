@@ -9,8 +9,8 @@ class GetContainerByIdUseCase @Inject constructor(
     private val assemblingRepository: AssemblingRepository
 ) {
 
-    suspend operator fun invoke(id: Int) = withContext(Dispatchers.IO) {
-        return@withContext assemblingRepository.getContainerById(id)
+    suspend operator fun invoke(number: String) = withContext(Dispatchers.IO) {
+        return@withContext assemblingRepository.getContainerById(number)
     }
 
 }

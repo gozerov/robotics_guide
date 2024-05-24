@@ -5,6 +5,7 @@ import android.net.Uri
 sealed interface EditComponentIntent {
 
     class SaveChanges(
+        val id: Int,
         val name: String,
         val imageUri: Uri?
     ) : EditComponentIntent

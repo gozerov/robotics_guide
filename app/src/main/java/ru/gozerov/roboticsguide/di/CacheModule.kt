@@ -21,7 +21,7 @@ class CacheModule {
 
     companion object {
 
-        private const val APP_SP_NAME = "RGPreferences"
+        const val APP_SP_NAME = "RGPreferences"
 
     }
 

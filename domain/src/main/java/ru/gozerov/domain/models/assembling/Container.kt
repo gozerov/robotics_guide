@@ -5,7 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Container(
-    val id: Int,
-    val component: Component,
-    val amount: Int
+    val number: String,
+    val room: String,
+    val amount: Int,
+    val componentId: Int
 ): Parcelable

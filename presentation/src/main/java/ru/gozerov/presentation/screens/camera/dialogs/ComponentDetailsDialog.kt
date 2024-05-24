@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.gozerov.presentation.R
 import ru.gozerov.presentation.databinding.DialogComponentDetailsBinding
 import ru.gozerov.presentation.screens.camera.QRCameraFragment
+import ru.gozerov.presentation.screens.tabs.TabsFragmentDirections
 
 class ComponentDetailsDialog : BottomSheetDialogFragment() {
 
@@ -27,6 +29,13 @@ class ComponentDetailsDialog : BottomSheetDialogFragment() {
         binding.txtComponentName.text = args.component.name
         binding.txtComponentRoom.text = getString(R.string.storing_in, args.component.room)
         binding.txtId.text = getString(R.string.simple_id_is, args.component.id)
+        binding.editButton.setOnClickListener {
+            val action = TabsFragmentDirections.actionTabsFragmentToEditComponentFragment(
+                args.component.name,
+                args.component.id
+            )
+            activity?.findNavController(R.id.globalFragmentContainer)?.navigate(action)
+        }
         return binding.root
     }
 

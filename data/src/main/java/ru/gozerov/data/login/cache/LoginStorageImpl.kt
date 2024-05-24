@@ -41,12 +41,14 @@ class LoginStorageImpl @Inject constructor(
             .apply()
     }
 
+    override fun getAccessToken(): String =
+        sharedPreferences.getString(KEY_ACCESS_TOKEN, "").toString()
 
     companion object {
 
+        private const val KEY_ACCESS_TOKEN = "INNER_ACCESS_TOKEN"
         private const val KEY_LAB_TOKEN = "LAB_TOKEN"
         private const val KEY_LAB_ID = "LAB_ID"
-        private const val KEY_ACCESS_TOKEN = "INNER_ACCESS_TOKEN"
         private const val KEY_REFRESH_TOKEN = "INNER_REFRESH_TOKEN"
 
     }

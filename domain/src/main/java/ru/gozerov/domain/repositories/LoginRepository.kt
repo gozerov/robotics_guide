@@ -12,4 +12,6 @@ interface LoginRepository {
 
     suspend fun logout()
 
+    suspend fun updateAuthorization(): Boolean
+
 }

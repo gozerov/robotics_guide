@@ -8,5 +8,5 @@ data class Component(
     val id: Int,
     val name: String,
     val imageUrl: String?,
-    val room: String
+    val room: String?
 ): Parcelable

@@ -24,6 +24,7 @@ compose-bom = "2024.04.00"
 compose-material = "1.6.5"
 zxing = "4.3.0"
 vosk-android = "0.3.32"
+permissions = "0.35.0-alpha"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -66,6 +67,9 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-ui-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding" }
+
+
+permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "permissions" }
 
 zxing = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing" }
 

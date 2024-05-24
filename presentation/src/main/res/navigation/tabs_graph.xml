@@ -35,13 +35,7 @@
         <fragment
             android:id="@+id/authorizationFragment"
             android:name="ru.gozerov.presentation.screens.profile.unlogged.AuthorizationFragment"
-            android:label="AuthorizationFragment" >
-            <action
-                android:id="@+id/action_authorizationFragment_to_profile"
-                app:destination="@id/profile"
-                app:popUpTo="@id/authorizationFragment"
-                app:popUpToInclusive="true" />
-        </fragment>
+            android:label="AuthorizationFragment" />
     </navigation>
     <dialog
         android:id="@+id/componentDetailsDialog"

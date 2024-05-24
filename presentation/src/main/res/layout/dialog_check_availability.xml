@@ -23,8 +23,9 @@
         android:drawablePadding="@dimen/_8dp"
         android:text="@string/to_calculate"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/surface"
         app:backgroundTint="@null"
+        app:iconTint="@color/surface"
         app:icon="@drawable/ic_calculation_18"
         app:iconGravity="textStart" />
 
@@ -46,8 +47,9 @@
         android:drawablePadding="@dimen/_8dp"
         android:text="@string/show_all"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/surface"
         app:backgroundTint="@null"
+        app:iconTint="@color/surface"
         app:icon="@drawable/ic_show_18"
         app:iconGravity="textStart" />
 

@@ -14,13 +14,13 @@
 
     <ImageButton
         android:id="@+id/navUp"
-        android:layout_width="@dimen/_48dp"
-        android:layout_height="@dimen/_48dp"
+        android:layout_width="@dimen/_40dp"
+        android:layout_height="@dimen/_40dp"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_16dp"
         android:background="@drawable/bg_nav_up"
         android:contentDescription="@null"
-        android:src="@drawable/ic_arrow_back_24"
+        android:src="@drawable/ic_arrow_back_32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

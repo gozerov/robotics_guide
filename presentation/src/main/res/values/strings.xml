@@ -41,7 +41,14 @@
     <string name="oops">Ой!</string>
     <string name="are_you_sure_to_continue">Найдены не все компоненты.\nВы уверены, что хотите \nпродолжить?</string>
     <string name="back_and_dismiss">Вернуться</string>
-    <string name="container_is">Контейнер №%1$d</string>
     <string name="details_count_is">Деталей:\\n%1$d шт</string>
     <string name="saved_assemblings_available_auth">Сохранённые сборки доступны только авторизованным пользователям</string>
+    <string name="input_component_name">Введите название детали</string>
+    <string name="take_photo">Сфотографируйте деталь</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="save">Сохранить</string>
+    <string name="success_changes">Данные были успешно изменены!</string>
+    <string name="input_component_id">Введите ID детали</string>
+    <string name="input_room">Введите аудиторию хранения</string>
+    <string name="on_assembling_repeat">Вы повторили сборку</string>
 </resources>

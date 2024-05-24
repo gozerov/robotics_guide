@@ -14,4 +14,6 @@ interface LoginStorage {
 
     fun clear()
 
+    fun getAccessToken(): String
+
 }

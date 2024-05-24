@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import ru.gozerov.domain.use_cases.GetAssemblingListUseCase
 import ru.gozerov.domain.use_cases.GetCategoriesUseCase
 import ru.gozerov.domain.use_cases.SearchAssemblingUseCase
-import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListEvent
+import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListEffect
 import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListIntent
 import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListViewState
 import ru.gozerov.presentation.utils.runCatchingNonCancellation
@@ -28,9 +28,9 @@ class AssemblingListViewModel @Inject constructor(
     val viewState: StateFlow<AssemblingListViewState>
         get() = _viewState.asStateFlow()
 
-    private val _events = MutableStateFlow<AssemblingListEvent>(AssemblingListEvent.None)
-    val events: StateFlow<AssemblingListEvent>
-        get() = _events.asStateFlow()
+    private val _effect = MutableStateFlow<AssemblingListEffect>(AssemblingListEffect.None)
+    val effect: StateFlow<AssemblingListEffect>
+        get() = _effect.asStateFlow()
 
     fun handleIntent(intent: AssemblingListIntent) {
         viewModelScope.launch {
@@ -41,14 +41,14 @@ class AssemblingListViewModel @Inject constructor(
                     }
                         .map {
                             _viewState.emit(
-                                AssemblingListViewState.LoadedAssemblings(
-                                    it.first,
-                                    it.second
-                                )
+                                AssemblingListViewState.LoadedAssemblings(it.first, it.second)
                             )
                         }
                         .onFailure {
-                            _viewState.emit(AssemblingListViewState.Error)
+                            if (it.message == HTTP_401)
+                                _effect.emit(AssemblingListEffect.NavigateToProfile)
+                            else
+                                _viewState.emit(AssemblingListViewState.Error)
                         }
                 }
 
@@ -69,7 +69,7 @@ class AssemblingListViewModel @Inject constructor(
                         getCategoriesUseCase()
                     }
                         .map {
-                            _events.emit(AssemblingListEvent.LoadedCategories(it))
+                            _effect.emit(AssemblingListEffect.LoadedCategories(it))
                         }
                         .onFailure {
                             _viewState.emit(AssemblingListViewState.Error)
@@ -77,6 +77,12 @@ class AssemblingListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    companion object {
+
+        private const val HTTP_401 = "HTTP 401 "
+
     }
 
 }

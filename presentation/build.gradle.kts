@@ -85,4 +85,7 @@ dependencies {
     implementation(libs.vosk.android)
     implementation("net.java.dev.jna:jna:5.13.0@aar")
 
+    //Permissions
+    implementation(libs.permissions)
+
 }

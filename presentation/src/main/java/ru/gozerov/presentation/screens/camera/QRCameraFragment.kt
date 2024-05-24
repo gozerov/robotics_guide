@@ -46,9 +46,12 @@ class QRCameraFragment : Fragment() {
                 )
             ) {
                 try {
-                    val id = result.text.toInt()
-                    viewModel.handleIntent(QRCameraIntent.ShowComponent(id))
-                    viewModel.handleIntent(QRCameraIntent.SetCameraActive(false))
+                    val id = result.text.toIntOrNull()
+                    id?.let {
+                        viewModel.handleIntent(QRCameraIntent.ShowComponent(id))
+                        //viewModel.handleIntent(QRCameraIntent.ShowContainer(result.text))
+                        viewModel.handleIntent(QRCameraIntent.SetCameraActive(false))
+                    } ?: viewModel.handleIntent(QRCameraIntent.ShowError("message"))
                 } catch (e: Exception) {
                     viewModel.handleIntent(QRCameraIntent.ShowError(id.toString()))
                 }
@@ -65,6 +68,7 @@ class QRCameraFragment : Fragment() {
                                 QRCameraFragmentDirections.actionNavCameraToComponentDetailsDialog(
                                     effect.component
                                 )
+                            viewModel.handleIntent(QRCameraIntent.Navigate)
                             findNavController().navigate(action)
                         }
 
@@ -82,6 +86,7 @@ class QRCameraFragment : Fragment() {
                                 getString(R.string.unknown_error), Snackbar.LENGTH_SHORT
                             )
                                 .show()
+                            viewModel.handleIntent(QRCameraIntent.SetCameraActive(true))
                         }
                     }
                 }

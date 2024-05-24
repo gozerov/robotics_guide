@@ -20,6 +20,7 @@ import ru.gozerov.presentation.databinding.FragmentQrCameraBinding
 import ru.gozerov.presentation.screens.assembling.check_availability.camera.models.CheckAvailabilityEffect
 import ru.gozerov.presentation.screens.assembling.check_availability.camera.models.CheckAvailabilityIntent
 import ru.gozerov.presentation.screens.assembling.check_availability.dialog_found.ComponentWithNeed
+import ru.gozerov.presentation.screens.camera.models.QRCameraIntent
 
 @AndroidEntryPoint
 class CheckAvailabilityFragment : Fragment() {
@@ -64,10 +65,9 @@ class CheckAvailabilityFragment : Fragment() {
                         is CheckAvailabilityEffect.None -> {}
                         is CheckAvailabilityEffect.ShowDialog -> {
                             val components = effect.components.map { component ->
-                                ComponentWithNeed(
-                                    component,
-                                    args.neededComponents.contains(component)
-                                )
+                                val isNeeded =
+                                    args.neededComponents.any { it.componentId == component.id }
+                                ComponentWithNeed(component, isNeeded)
                             }
                             val action =
                                 CheckAvailabilityFragmentDirections.actionCheckAvailabilityFragmentToCheckAvailabilityDialog(
@@ -84,6 +84,7 @@ class CheckAvailabilityFragment : Fragment() {
                                 getString(R.string.unknown_error), Snackbar.LENGTH_SHORT
                             )
                                 .show()
+                            viewModel.handleIntent(CheckAvailabilityIntent.SetCameraActive(true))
                         }
                     }
                 }

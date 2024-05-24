@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_tabsFragment_to_editComponentFragment"
             app:destination="@id/editComponentFragment" />
+        <action
+            android:id="@+id/action_tabsFragment_to_editContainerFragment"
+            app:destination="@id/editContainerFragment" />
     </fragment>
     <fragment
         android:id="@+id/assemblingDetailsFragment"
@@ -41,7 +44,7 @@
             app:destination="@id/checkAvailabilityDialog" />
         <argument
             android:name="neededComponents"
-            app:argType="ru.gozerov.domain.models.assembling.Component[]" />
+            app:argType="ru.gozerov.domain.models.assembling.AssemblingComponent[]" />
         <argument android:name="assemblingId"
             app:argType="integer" />
     </fragment>
@@ -57,7 +60,7 @@
             app:destination="@id/compareTableDialog" />
         <argument
             android:name="neededComponents"
-            app:argType="ru.gozerov.domain.models.assembling.Component[]" />
+            app:argType="ru.gozerov.domain.models.assembling.AssemblingComponent[]" />
         <action
             android:id="@+id/action_checkAvailabilityDialog_to_lackOfComponentsDialog"
             app:destination="@id/lackOfComponentsDialog" />
@@ -87,7 +90,7 @@
             app:argType="ru.gozerov.presentation.screens.assembling.check_availability.dialog_found.ComponentWithNeed[]" />
         <argument
             android:name="neededComponents"
-            app:argType="ru.gozerov.domain.models.assembling.Component[]" />
+            app:argType="ru.gozerov.domain.models.assembling.AssemblingComponent[]" />
     </dialog>
     <dialog
         android:id="@+id/lackOfComponentsDialog"
@@ -113,6 +116,14 @@
         <argument
             android:name="id"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editContainerFragment"
+        android:name="ru.gozerov.presentation.screens.camera.edit.edit_container.EditContainerFragment"
+        android:label="EditContainerFragment" >
+        <argument
+            android:name="container"
+            app:argType="ru.gozerov.domain.models.assembling.Container" />
     </fragment>
 
 </navigation>

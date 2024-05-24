@@ -27,7 +27,7 @@ class EditComponentViewModel @Inject constructor(
             when (intent) {
                 is EditComponentIntent.SaveChanges -> {
                     runCatchingNonCancellation {
-                        updateComponentUseCase.invoke(intent.name, intent.imageUri)
+                        updateComponentUseCase.invoke(intent.id, intent.name, intent.imageUri)
                     }
                         .map {
                             _effect.emit(EditComponentEffect.ShowDialog)

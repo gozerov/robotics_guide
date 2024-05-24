@@ -4,26 +4,21 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import ru.gozerov.presentation.R
 import android.view.ViewGroup
-import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gozerov.presentation.databinding.FragmentWebViewBinding
 import ru.gozerov.presentation.screens.profile.unlogged.AuthorizationFragment
-import ru.gozerov.presentation.screens.tabs.TabsFragment
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -31,6 +26,17 @@ import java.util.concurrent.atomic.AtomicBoolean
 class LoginWebViewFragment : Fragment() {
 
     private lateinit var binding: FragmentWebViewBinding
+
+    private var onBackPressedCallback = object : OnBackPressedCallback(true) {
+
+        override fun handleOnBackPressed() {
+            if (binding.webView.canGoBack())
+                binding.webView.goBack()
+            else
+                activity?.onBackPressed()
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,12 +55,11 @@ class LoginWebViewFragment : Fragment() {
         webSettings.javaScriptEnabled = true
         webSettings.allowFileAccess = true
         webSettings.allowContentAccess = true
-        webSettings.blockNetworkLoads = false
-        webSettings.javaScriptCanOpenWindowsAutomatically = true
-        webSettings.setSupportMultipleWindows(false)
         webSettings.domStorageEnabled = true
         webSettings.databaseEnabled = true
         binding.webView.loadUrl(BASE_URL)
+
+        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
     }
 
     private inner class Client : WebViewClient() {
@@ -97,6 +102,11 @@ class LoginWebViewFragment : Fragment() {
         private var navigated: AtomicBoolean = AtomicBoolean(false)
         private var blocked: AtomicBoolean = AtomicBoolean(false)
 
+    }
+
+    override fun onPause() {
+        onBackPressedCallback.remove()
+        super.onPause()
     }
 
     private companion object {

@@ -1,7 +1,6 @@
 package ru.gozerov.presentation.screens.assembling.assembly_process.views
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -44,6 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import ru.gozerov.domain.models.assembling.AssemblingComponent
 import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.presentation.R
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
@@ -52,7 +52,7 @@ import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 @Composable
 internal fun AssemblyProcessView(
     parentPaddingValues: PaddingValues,
-    container: Container,
+    component: AssemblingComponent,
     step: Int,
     stepCount: Int,
     onBackClick: () -> Unit,
@@ -151,8 +151,8 @@ internal fun AssemblyProcessView(
                     }
                 }
             }
-            AssemblyProcessImageSection(container.component.imageUrl)
-            ContainerCard(id = container.component.id, name = container.component.name)
+            AssemblyProcessImageSection(component.photoUrl)
+            ContainerCard(id = component.componentId, name = component.name)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -161,7 +161,7 @@ internal fun AssemblyProcessView(
             ) {
                 Text(
                     textAlign = TextAlign.Center,
-                    text = stringResource(id = R.string.amount_is, container.amount),
+                    text = stringResource(id = R.string.amount_is, component.amount),
                     color = RoboticsGuideTheme.colors.secondary,
                     fontSize = 24.sp
                 )

@@ -2,6 +2,7 @@ package ru.gozerov.presentation.screens.tabs
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,11 +45,26 @@ class TabsFragment : Fragment() {
         val childNavController =
             (childFragmentManager.findFragmentById(R.id.localFragmentContainer) as NavHostFragment).navController
 
-        activity?.supportFragmentManager?.setFragmentResultListener(REQUEST_KEY_AUTH, viewLifecycleOwner) { key, _ ->
-            if (key == REQUEST_KEY_AUTH)
-                (childNavController.graph[R.id.nav_profile] as NavGraph).setStartDestination(R.id.profile)
-            else if (key == REQUEST_KEY_LOG_OUT)
-                (childNavController.graph[R.id.nav_profile] as NavGraph).setStartDestination(R.id.authorizationFragment)
+        activity?.supportFragmentManager?.setFragmentResultListener(
+            REQUEST_KEY_AUTH,
+            viewLifecycleOwner
+        ) { _, _ ->
+            (childNavController.graph[R.id.nav_profile] as NavGraph).setStartDestination(R.id.profile)
+            binding.bottomNavView.selectedItemId = R.id.nav_profile
+        }
+
+        activity?.supportFragmentManager?.setFragmentResultListener(
+            REQUEST_KEY_LOG_OUT,
+            viewLifecycleOwner
+        ) { _, _ ->
+            (childNavController.graph[R.id.nav_profile] as NavGraph).setStartDestination(R.id.authorizationFragment)
+        }
+
+        activity?.supportFragmentManager?.setFragmentResultListener(
+            REQUEST_KEY_GO_TO_AUTH,
+            viewLifecycleOwner
+        ) { _, _ ->
+            binding.bottomNavView.selectedItemId = R.id.nav_profile
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -72,6 +88,7 @@ class TabsFragment : Fragment() {
 
         const val REQUEST_KEY_AUTH = "requestKeyAuth"
         const val REQUEST_KEY_LOG_OUT = "requestKeyLogOut"
+        const val REQUEST_KEY_GO_TO_AUTH = "requestGoAuth"
 
     }
 

@@ -46,13 +46,13 @@ class QRCameraViewModel @Inject constructor(
 
                 is QRCameraIntent.ShowContainer -> {
                     runCatchingNonCancellation {
-                        getContainerByIdUseCase(intent.id)
+                        getContainerByIdUseCase(intent.number)
                     }
                         .map { container ->
                             _effect.emit(QRCameraEffect.ShowContainer(container))
                         }
                         .onFailure {
-                            _effect.emit(QRCameraEffect.Error(intent.id.toString()))
+                            _effect.emit(QRCameraEffect.Error(intent.number))
                         }
                 }
 
@@ -63,6 +63,10 @@ class QRCameraViewModel @Inject constructor(
                 is QRCameraIntent.ShowError -> {
                     isCameraActive = true
                     _effect.emit(QRCameraEffect.Error(intent.message))
+                }
+
+                is QRCameraIntent.Navigate -> {
+                    _effect.emit(QRCameraEffect.None)
                 }
             }
         }

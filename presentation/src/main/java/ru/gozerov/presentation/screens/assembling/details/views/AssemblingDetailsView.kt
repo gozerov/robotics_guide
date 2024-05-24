@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -21,8 +20,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -48,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.gozerov.domain.models.assembling.Assembling
 import ru.gozerov.presentation.R
+import ru.gozerov.presentation.shared.views.NavUpView
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -70,17 +68,7 @@ fun AssemblingDetailsView(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                Icon(
-                    modifier = Modifier
-                        .padding(start = 16.dp, top = 16.dp)
-                        .size(36.dp)
-                        .clickable(navUpInteractionSource, null) {
-                            onNavUpClick()
-                        },
-                    tint = RoboticsGuideTheme.colors.primary,
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null
-                )
+                NavUpView(onNavUpClick)
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -123,20 +111,20 @@ fun AssemblingDetailsView(
                         color = RoboticsGuideTheme.colors.outlineVariant
                     )
                 }
-                items(assembling.containers.size) {
-                    val container = assembling.containers[it]
+                items(assembling.components.size) {
+                    val container = assembling.components[it]
                     Column(
                         modifier = Modifier.height(56.dp)
                     ) {
                         CellWithoutDivider(
                             modifier = Modifier.fillMaxWidth(),
-                            firstText = container.component.name,
+                            firstText = container.name,
                             secondText = stringResource(
                                 id = R.string.amount_count,
                                 container.amount
                             )
                         )
-                        if (it != assembling.containers.size - 1) {
+                        if (it != assembling.components.size - 1) {
                             HorizontalDivider(
                                 color = RoboticsGuideTheme.colors.outlineVariant
                             )

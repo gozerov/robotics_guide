@@ -16,21 +16,26 @@ import javax.inject.Inject
 @HiltViewModel
 class AssemblingDetailsViewModel @Inject constructor(
     private val getAssemblingDetailsUseCase: GetAssemblingDetailsUseCase
-): ViewModel() {
+) : ViewModel() {
 
-    private val _viewState = MutableStateFlow<AssemblingDetailsViewState>(AssemblingDetailsViewState.Empty)
+    private val _viewState =
+        MutableStateFlow<AssemblingDetailsViewState>(AssemblingDetailsViewState.Empty)
     val viewState: StateFlow<AssemblingDetailsViewState>
         get() = _viewState.asStateFlow()
 
     fun handleIntent(intent: AssemblingDetailsIntent) {
         viewModelScope.launch {
-            when(intent) {
-                is  AssemblingDetailsIntent.LoadAssembling -> {
+            when (intent) {
+                is AssemblingDetailsIntent.LoadAssembling -> {
                     runCatchingNonCancellation {
                         getAssemblingDetailsUseCase(intent.id)
                     }
-                        .map {
-                            _viewState.emit(AssemblingDetailsViewState.LoadedAssembling(it))
+                        .map { flow ->
+                            flow.collect { assembling ->
+                                _viewState.emit(
+                                    AssemblingDetailsViewState.LoadedAssembling(assembling)
+                                )
+                            }
                         }
                         .onFailure {
                             _viewState.emit(AssemblingDetailsViewState.Error())

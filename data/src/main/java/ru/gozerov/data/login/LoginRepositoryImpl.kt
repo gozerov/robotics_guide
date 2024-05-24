@@ -1,5 +1,7 @@
 package ru.gozerov.data.login
 
+import retrofit2.HttpException
+import retrofit2.http.HTTP
 import ru.gozerov.data.login.cache.LoginStorage
 import ru.gozerov.data.login.remote.LabApi
 import ru.gozerov.data.login.remote.LoginApi
@@ -38,6 +40,25 @@ class LoginRepositoryImpl @Inject constructor(
 
     override suspend fun logout() {
         loginStorage.clear()
+    }
+
+    override suspend fun updateAuthorization(): Boolean {
+        try {
+            val bearer = loginStorage.getLabToken()
+            val id = loginStorage.getLabId()
+
+            if (bearer == null || id == null)
+                return false
+
+            labApi.getOwnUser(bearer, id)
+            return true
+        } catch (e: HttpException) {
+            if (e.code() == 401) {
+                logout()
+                return false
+            }
+        }
+        error("unknown exception")
     }
 
 }
