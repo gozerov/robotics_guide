@@ -11,7 +11,7 @@ data class AssemblingEntity(
     val name: String,
     val instruction: String,
     @ColumnInfo(name = "amount_ready") val readyAmount: Int,
-    @ColumnInfo(name = "link_to_project") val linkToProject: String,
+    @ColumnInfo(name = "link_to_project") val linkToProject: String?,
     @ColumnInfo(name = "link_to_sound") val linkToSound: String?,
     @ColumnInfo(name = "user_id") val userId: Int
 )

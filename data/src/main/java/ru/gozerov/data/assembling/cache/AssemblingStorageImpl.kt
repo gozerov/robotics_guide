@@ -1,5 +1,8 @@
 package ru.gozerov.data.assembling.cache
 
+import ru.gozerov.data.assembling.cache.dao.AssemblingComponentDao
+import ru.gozerov.data.assembling.cache.dao.AssemblingDao
+import ru.gozerov.data.assembling.cache.dao.ComponentDao
 import ru.gozerov.data.assembling.cache.models.AssemblingComponentEntity
 import ru.gozerov.data.assembling.remote.models.AssemblingDTO
 import ru.gozerov.data.toAssemblingComponent

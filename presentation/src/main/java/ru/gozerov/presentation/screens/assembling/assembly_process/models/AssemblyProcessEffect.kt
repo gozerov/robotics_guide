@@ -2,14 +2,18 @@ package ru.gozerov.presentation.screens.assembling.assembly_process.models
 
 sealed interface AssemblyProcessEffect {
 
-    class RecordPaused: AssemblyProcessEffect
+    class LoadedSpeech : AssemblyProcessEffect
 
-    class RecordContinued: AssemblyProcessEffect
+    class RecordPaused : AssemblyProcessEffect
 
-    class RecordOff: AssemblyProcessEffect
+    class RecordContinued : AssemblyProcessEffect
 
-    class RecordOn: AssemblyProcessEffect
+    class RecordOff : AssemblyProcessEffect
 
-    class RepeatRecord: AssemblyProcessEffect
+    class RecordOn : AssemblyProcessEffect
+
+    class RepeatRecord : AssemblyProcessEffect
+
+    class Navigate(val isBack: Boolean) : AssemblyProcessEffect
 
 }

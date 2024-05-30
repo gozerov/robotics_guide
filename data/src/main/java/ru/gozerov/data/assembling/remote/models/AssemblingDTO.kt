@@ -7,7 +7,7 @@ data class AssemblingDTO(
     val name: String,
     val instruction: String,
     @Json(name = "amount_ready") val readyAmount: Int,
-    @Json(name = "link_to_project") val linkToProject: String,
+    @Json(name = "link_to_project") val linkToProject: String?,
     @Json(name = "link_to_sound") val linkToSound: String?,
     @Json(name = "user_id") val userId: Int,
     val components: List<AssemblingComponentDTO>

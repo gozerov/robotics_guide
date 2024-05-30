@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.gozerov.domain.use_cases.GetCurrentStepUseCase
+import ru.gozerov.domain.use_cases.GetSynthesizedSpeechUseCase
 import ru.gozerov.domain.use_cases.MoveOnNextStepUseCase
 import ru.gozerov.presentation.screens.assembling.assembly_process.models.AssemblyProcessEffect
 import ru.gozerov.presentation.screens.assembling.assembly_process.models.AssemblyProcessIntent
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AssemblyProcessViewModel @Inject constructor(
     private val getCurrentStepUseCase: GetCurrentStepUseCase,
+    private val getSynthesizedSpeechUseCase: GetSynthesizedSpeechUseCase,
     private val moveOnNextStepUseCase: MoveOnNextStepUseCase
 ) : ViewModel() {
 
@@ -30,15 +32,19 @@ class AssemblyProcessViewModel @Inject constructor(
     val viewState: StateFlow<AssemblyProcessViewState>
         get() = _viewState.asStateFlow()
 
-    private val _effects =
+    private val _effect =
         MutableSharedFlow<AssemblyProcessEffect>(1, 0, BufferOverflow.DROP_OLDEST)
 
-    val effects: SharedFlow<AssemblyProcessEffect>
-        get() = _effects.asSharedFlow()
+    val effect: SharedFlow<AssemblyProcessEffect>
+        get() = _effect.asSharedFlow()
 
     fun handleIntent(intent: AssemblyProcessIntent) {
         viewModelScope.launch {
             when (intent) {
+                is AssemblyProcessIntent.ShowError -> {
+                    _viewState.emit(AssemblyProcessViewState.Error())
+                }
+
                 is AssemblyProcessIntent.LoadStep -> {
                     runCatchingNonCancellation {
                         getCurrentStepUseCase(intent.assemblingId)
@@ -51,10 +57,25 @@ class AssemblyProcessViewModel @Inject constructor(
                         }
                 }
 
+                is AssemblyProcessIntent.LoadSpeech -> {
+                    runCatchingNonCancellation {
+                        getSynthesizedSpeechUseCase.invoke(intent.componentId, intent.name, intent.fileUrl)
+                    }
+                        .map {
+                            _effect.emit(AssemblyProcessEffect.LoadedSpeech())
+                        }
+                        .onFailure {
+                            _viewState.emit(AssemblyProcessViewState.Error())
+                        }
+                }
+
                 is AssemblyProcessIntent.MoveOnNext -> {
                     runCatchingNonCancellation {
                         moveOnNextStepUseCase(intent.isBack)
                     }
+                        .map {
+                            _effect.emit(AssemblyProcessEffect.Navigate(intent.isBack))
+                        }
                         .onFailure {
                             _viewState.emit(AssemblyProcessViewState.Error())
                         }
@@ -62,20 +83,20 @@ class AssemblyProcessViewModel @Inject constructor(
 
                 is AssemblyProcessIntent.SetEnabled -> {
                     when (intent.enabled) {
-                        true -> _effects.emit(AssemblyProcessEffect.RecordOn())
-                        false -> _effects.emit(AssemblyProcessEffect.RecordOff())
+                        true -> _effect.emit(AssemblyProcessEffect.RecordOn())
+                        false -> _effect.emit(AssemblyProcessEffect.RecordOff())
                     }
                 }
 
                 is AssemblyProcessIntent.SetPause -> {
                     when (intent.paused) {
-                        true -> _effects.emit(AssemblyProcessEffect.RecordPaused())
-                        false -> _effects.emit(AssemblyProcessEffect.RecordContinued())
+                        true -> _effect.emit(AssemblyProcessEffect.RecordPaused())
+                        false -> _effect.emit(AssemblyProcessEffect.RecordContinued())
                     }
                 }
 
                 is AssemblyProcessIntent.RepeatRecord -> {
-                    _effects.emit(AssemblyProcessEffect.RepeatRecord())
+                    _effect.emit(AssemblyProcessEffect.RepeatRecord())
                 }
             }
         }

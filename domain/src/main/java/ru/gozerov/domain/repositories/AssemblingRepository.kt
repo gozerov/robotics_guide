@@ -8,6 +8,7 @@ import ru.gozerov.domain.models.assembling.Component
 import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.domain.models.assembling.FilterCategory
 import ru.gozerov.domain.models.assembling.SimpleAssembling
+import java.io.File
 
 interface AssemblingRepository {
 
@@ -30,5 +31,7 @@ interface AssemblingRepository {
     suspend fun getContainerById(number: String): Container
 
     suspend fun updateContainer(container: Container)
+
+    suspend fun loadSpeech(componentId: Int, name: String, speechUrl: String)
 
 }

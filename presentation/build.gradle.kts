@@ -88,4 +88,8 @@ dependencies {
     //Permissions
     implementation(libs.permissions)
 
+    //CoordinatorLayout
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.coordinatorlayout)
+
 }

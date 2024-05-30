@@ -3,9 +3,10 @@ package ru.gozerov.data.assembling
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -25,7 +26,10 @@ import ru.gozerov.domain.models.assembling.SimpleAssembling
 import ru.gozerov.domain.repositories.AssemblingRepository
 import java.io.File
 import java.io.FileOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import javax.inject.Inject
+
 
 class AssemblingRepositoryImpl @Inject constructor(
     private val assemblingApi: AssemblingApi,
@@ -133,6 +137,31 @@ class AssemblingRepositoryImpl @Inject constructor(
         val bearer = "Bearer ${loginStorage.getAccessToken()}"
         assemblingApi.updateContainer(bearer, container.toContainerDTO())
     }
+
+    override suspend fun loadSpeech(componentId: Int, name: String, speechUrl: String) =
+        withContext(Dispatchers.IO) {
+            try {
+                val url = URL(speechUrl)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.connect()
+
+                val fileName = "${name}_${componentId}"
+                val inputStream = connection.inputStream
+                val outputStream = FileOutputStream(fileName)
+
+                val buffer = ByteArray(1024)
+                var bytesRead: Int
+                while ((inputStream.read(buffer).also { bytesRead = it }) != -1) {
+                    outputStream.write(buffer, 0, bytesRead)
+                }
+
+                outputStream.close()
+                inputStream.close()
+                connection.disconnect()
+            } catch (e: Exception) {
+                throw IllegalArgumentException("bad link")
+            }
+        }
 
     private fun getImagePart(imageUri: Uri?): MultipartBody.Part? {
         var part: MultipartBody.Part? = null

@@ -5,53 +5,53 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_component_dialog"
     android:orientation="vertical"
-    android:scrollbars="none"
-    android:paddingVertical="@dimen/_16dp">
+    android:paddingVertical="@dimen/_16dp"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/calculateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_32dp"
-        android:layout_marginTop="@dimen/_16dp"
-        android:background="@drawable/bg_calculate_button"
-        android:drawablePadding="@dimen/_8dp"
-        android:text="@string/to_calculate"
-        android:textAllCaps="false"
-        android:textColor="@color/surface"
-        app:backgroundTint="@null"
-        app:iconTint="@color/surface"
-        app:icon="@drawable/ic_calculation_18"
-        app:iconGravity="textStart" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/calculateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_32dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@drawable/bg_calculate_button"
+            android:drawablePadding="@dimen/_8dp"
+            android:text="@string/to_calculate"
+            android:textAllCaps="false"
+            android:textColor="@color/surface"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_calculation_18"
+            app:iconGravity="textStart"
+            app:iconTint="@color/surface" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/componentsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_32dp"
-        android:orientation="vertical"
-        android:background="@drawable/bg_components_list"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/componentsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_32dp"
+            android:background="@drawable/bg_components_list"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/showAllButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_32dp"
-        android:background="@drawable/bg_calculate_button"
-        android:drawablePadding="@dimen/_8dp"
-        android:text="@string/show_all"
-        android:textAllCaps="false"
-        android:textColor="@color/surface"
-        app:backgroundTint="@null"
-        app:iconTint="@color/surface"
-        app:icon="@drawable/ic_show_18"
-        app:iconGravity="textStart" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/showAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_32dp"
+            android:background="@drawable/bg_calculate_button"
+            android:drawablePadding="@dimen/_8dp"
+            android:text="@string/show_all"
+            android:textAllCaps="false"
+            android:textColor="@color/surface"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_show_18"
+            app:iconGravity="textStart"
+            app:iconTint="@color/surface" />
 
     </LinearLayout>
 

@@ -70,7 +70,7 @@ class RetrofitModule {
         val loggingInterceptor =
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
-            .readTimeout(Duration.ofMillis(15000))
+            .readTimeout(Duration.ofMillis(20000))
             .addInterceptor(loggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()

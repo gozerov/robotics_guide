@@ -8,6 +8,6 @@ data class AssemblingComponent(
     val componentId: Int,
     val name: String,
     val amount: Int,
-    val photoUrl: String,
+    val photoUrl: String?,
     val linkToSound: String?
 ) : Parcelable

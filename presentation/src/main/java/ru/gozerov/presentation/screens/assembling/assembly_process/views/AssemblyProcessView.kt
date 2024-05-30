@@ -42,9 +42,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import ru.gozerov.domain.models.assembling.AssemblingComponent
-import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.presentation.R
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 
@@ -260,44 +259,48 @@ internal fun AssemblyProcessToolbar(
 
 @Composable
 internal fun AssemblyProcessImageSection(imageUrl: String?) {
-    if (imageUrl != null) {
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .height(240.dp)
-                .clip(
-                    shape = RoundedCornerShape(8.dp)
-                ),
-            contentScale = ContentScale.Crop
-        )
-    } else {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
+
+    SubcomposeAsyncImage(
+        model = imageUrl,
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        success = { result ->
             Image(
-                modifier = Modifier.padding(top = 48.dp),
-                painter = painterResource(id = R.drawable.ic_pliers_left),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .height(240.dp)
+                    .clip(shape = RoundedCornerShape(8.dp)),
+                painter = result.painter,
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.width(36.dp))
-            Image(
-                painter = painterResource(id = R.drawable.ic_pliers_center),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(36.dp))
-            Image(
-                modifier = Modifier.padding(top = 48.dp),
-                painter = painterResource(id = R.drawable.ic_pliers_right),
-                contentDescription = null
-            )
+        },
+        error = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    modifier = Modifier.padding(top = 48.dp),
+                    painter = painterResource(id = R.drawable.ic_pliers_left),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(36.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_pliers_center),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(36.dp))
+                Image(
+                    modifier = Modifier.padding(top = 48.dp),
+                    painter = painterResource(id = R.drawable.ic_pliers_right),
+                    contentDescription = null
+                )
+            }
         }
-    }
+    )
 }
 
 @Composable

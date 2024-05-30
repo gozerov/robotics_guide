@@ -9,7 +9,7 @@ data class Assembling(
     val name: String,
     val instruction: String,
     val readyAmount: Int,
-    val linkToProject: String,
+    val linkToProject: String?,
     val linkToSound: String?,
     val userId: Int,
     val components: List<AssemblingComponent>

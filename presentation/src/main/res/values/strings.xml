@@ -51,4 +51,10 @@
     <string name="input_component_id">Введите ID детали</string>
     <string name="input_room">Введите аудиторию хранения</string>
     <string name="on_assembling_repeat">Вы повторили сборку</string>
+    <string name="next_1">вперед</string>
+    <string name="next_2">след</string>
+    <string name="next_3">дале</string>
+    <string name="back_1">назад</string>
+    <string name="back_2">предыд</string>
+    <string name="back_3">обратн</string>
 </resources>

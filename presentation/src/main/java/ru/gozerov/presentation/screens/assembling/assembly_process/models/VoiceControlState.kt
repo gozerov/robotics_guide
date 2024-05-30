@@ -14,4 +14,8 @@ sealed interface VoiceControlState {
 
     class On: VoiceControlState
 
+    class Next: VoiceControlState
+
+    class Back: VoiceControlState
+
 }

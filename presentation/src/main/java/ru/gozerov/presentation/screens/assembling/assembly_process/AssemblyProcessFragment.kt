@@ -2,7 +2,9 @@ package ru.gozerov.presentation.screens.assembling.assembly_process
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -124,6 +126,7 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
                 recognizeMicrophone()
             },
             {
+                Log.e("AAA", it.stackTraceToString())
                 setErrorState()
             }
         )
@@ -148,6 +151,20 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
                 _voiceControlState.tryEmit(VoiceControlState.Pause())
             else if (it.contains(getString(R.string._continue)))
                 _voiceControlState.tryEmit(VoiceControlState.Continue())
+            else if (it.contains(getString(R.string.next_1)) || it.contains(getString(R.string.next_2)) || it.contains(
+                    getString(
+                        R.string.next_3
+                    )
+                )
+            )
+                _voiceControlState.tryEmit(VoiceControlState.Next())
+            else if (it.contains(getString(R.string.back_1)) || it.contains(getString(R.string.back_2)) || it.contains(
+                    getString(
+                        R.string.back_3
+                    )
+                )
+            )
+                _voiceControlState.tryEmit(VoiceControlState.Back())
             else if (it.contains(getString(R.string._repeat)))
                 _voiceControlState.tryEmit(VoiceControlState.Repeat())
         }
@@ -186,9 +203,11 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
 
     @Composable
     private fun AssemblyProcessScreen() {
+        val mediaPlayer = MediaPlayer()
+
         val viewState = viewModel.viewState.collectAsState().value
         val effect =
-            viewModel.effects.collectAsState(initial = AssemblyProcessEffect.RecordOn()).value
+            viewModel.effect.collectAsState(initial = AssemblyProcessEffect.RecordOn()).value
         val currentStep = remember { mutableStateOf<AssemblyStep?>(null) }
         var isMenuVisible: Boolean by remember { mutableStateOf(false) }
         var isAudioPaused: Boolean by remember { mutableStateOf(false) }
@@ -208,22 +227,9 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
                     stepCount = stepCount,
                     onBackClick = {
                         viewModel.handleIntent(AssemblyProcessIntent.MoveOnNext(true))
-                        findNavController().popBackStack()
                     },
                     onNextClick = {
                         viewModel.handleIntent(AssemblyProcessIntent.MoveOnNext(false))
-                        if (isFinish) {
-                            parentFragmentManager.setFragmentResult(
-                                AssemblingDetailsFragment.PROCESS_END_REQUEST_KEY, bundleOf()
-                            )
-                            findNavController().popBackStack(R.id.assemblingDetailsFragment, false)
-                        } else {
-                            val action =
-                                AssemblyProcessFragmentDirections.actionAssemblyProcessFragmentSelf(
-                                    args.assemblingId
-                                )
-                            findNavController().navigate(action)
-                        }
                     },
                     onSettingsClick = {
                         isMenuVisible = !isMenuVisible
@@ -256,6 +262,37 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
         }
 
         when (effect) {
+            is AssemblyProcessEffect.Navigate -> {
+                if (effect.isBack) {
+                    findNavController().popBackStack()
+                } else {
+                    if (currentStep.value?.isFinish == true) {
+                        parentFragmentManager.setFragmentResult(
+                            AssemblingDetailsFragment.PROCESS_END_REQUEST_KEY, bundleOf()
+                        )
+                        findNavController().popBackStack(R.id.assemblingDetailsFragment, false)
+                    } else {
+                        val action =
+                            AssemblyProcessFragmentDirections.actionAssemblyProcessFragmentSelf(
+                                args.assemblingId
+                            )
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+
+            is AssemblyProcessEffect.LoadedSpeech -> {
+                val fileName = Environment.getExternalStorageDirectory().path + "/audio.mp3";
+
+                mediaPlayer.setDataSource(fileName)
+                try {
+                    mediaPlayer.setDataSource(fileName)
+                    mediaPlayer.prepare()
+                } catch (e: IOException) {
+                    viewModel.handleIntent(AssemblyProcessIntent.ShowError)
+                }
+            }
+
             is AssemblyProcessEffect.RecordOff -> {
                 isAudioOff = true
             }
@@ -298,6 +335,14 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
 
             is VoiceControlState.Repeat -> {
                 viewModel.handleIntent(AssemblyProcessIntent.RepeatRecord())
+            }
+
+            is VoiceControlState.Next -> {
+                viewModel.handleIntent(AssemblyProcessIntent.MoveOnNext(false))
+            }
+
+            is VoiceControlState.Back -> {
+                viewModel.handleIntent(AssemblyProcessIntent.MoveOnNext(true))
             }
         }
     }
