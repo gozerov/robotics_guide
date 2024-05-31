@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import ru.gozerov.domain.models.assembling.AssemblingComponent
-import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.presentation.R
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 

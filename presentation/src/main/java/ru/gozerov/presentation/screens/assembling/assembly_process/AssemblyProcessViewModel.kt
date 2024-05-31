@@ -43,8 +43,9 @@ class AssemblyProcessViewModel @Inject constructor(
                     runCatchingNonCancellation {
                         getCurrentStepUseCase(intent.assemblingId)
                     }
-                        .map {
-                            _viewState.emit(AssemblyProcessViewState.LoadedStep(it))
+                        .map { step ->
+                            _effects.emit(AssemblyProcessEffect.RecordOn(step.container.name))
+                            _viewState.emit(AssemblyProcessViewState.LoadedStep(step))
                         }
                         .onFailure {
                             _viewState.emit(AssemblyProcessViewState.Error())
@@ -65,7 +66,12 @@ class AssemblyProcessViewModel @Inject constructor(
 
                 is AssemblyProcessIntent.SetEnabled -> {
                     when (intent.enabled) {
-                        true -> _effects.emit(AssemblyProcessEffect.RecordOn())
+                        true -> {
+                            val componentName =
+                                (_viewState.value as? AssemblyProcessViewState.LoadedStep)?.step?.container?.name
+                            _effects.emit(AssemblyProcessEffect.RecordOn(componentName))
+                        }
+
                         false -> _effects.emit(AssemblyProcessEffect.RecordOff())
                     }
                 }

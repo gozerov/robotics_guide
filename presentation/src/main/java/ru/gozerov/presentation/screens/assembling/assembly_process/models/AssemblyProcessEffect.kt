@@ -8,7 +8,7 @@ sealed interface AssemblyProcessEffect {
 
     class RecordOff : AssemblyProcessEffect
 
-    class RecordOn : AssemblyProcessEffect
+    class RecordOn(val componentName: String?) : AssemblyProcessEffect
 
     class RepeatRecord : AssemblyProcessEffect
 

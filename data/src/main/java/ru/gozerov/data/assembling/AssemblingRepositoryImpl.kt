@@ -16,12 +16,14 @@ import ru.gozerov.data.toComponent
 import ru.gozerov.data.toContainer
 import ru.gozerov.data.toContainerDTO
 import ru.gozerov.domain.models.assembling.Assembling
+import ru.gozerov.domain.models.assembling.AssemblingComponent
 import ru.gozerov.domain.models.assembling.AssemblyStep
 import ru.gozerov.domain.models.assembling.Component
 import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.domain.models.assembling.FilterCategory
 import ru.gozerov.domain.models.assembling.SimpleAssembling
 import ru.gozerov.domain.repositories.AssemblingRepository
+import java.io.FileOutputStream
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -47,9 +49,15 @@ class AssemblingRepositoryImpl @Inject constructor(
         val bearer = "Bearer ${loginStorage.getAccessToken()}"
         val cachedAssembling = assemblingStorage.getAssemblingById(id)
         if (cachedAssembling != null) emit(cachedAssembling)
-        val assembling = assemblingApi.getAssemblingById(bearer, id)
-        assemblingStorage.insertAssembling(assembling)
-        emit(assembling.toAssembling())
+        val assemblingDTO = assemblingApi.getAssemblingById(bearer, id)
+        assemblingStorage.insertAssembling(assemblingDTO)
+
+        val assembling = assemblingDTO.toAssembling()
+        assembling.components.forEach { component ->
+            downloadSound(component)
+        }
+
+        emit(assembling)
     }
 
     override suspend fun searchAssembling(
@@ -145,5 +153,25 @@ class AssemblingRepositoryImpl @Inject constructor(
         return part
     }
 
+    private suspend fun downloadSound(assemblingComponent: AssemblingComponent) {
+        assemblingComponent.linkToSound?.let { url ->
+            val response = assemblingApi.downloadSound(url)
+            val inputStream: InputStream = response.byteStream()
+            val outputPath = context.filesDir.path + "/${assemblingComponent.name}.mp3"
+            inputStream.use { input ->
+                FileOutputStream(outputPath).use { output ->
+                    val buffer = ByteArray(4 * 1024)
+                    while (true) {
+                        val read = input.read(buffer)
+                        if (read == -1) {
+                            break
+                        }
+                        output.write(buffer, 0, read)
+                    }
+                    output.flush()
+                }
+            }
+        }
+    }
 
 }

@@ -2,6 +2,8 @@ package ru.gozerov.presentation.screens.assembling.assembly_process
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -52,6 +54,7 @@ import ru.gozerov.presentation.screens.assembling.assembly_process.models.VoiceC
 import ru.gozerov.presentation.screens.assembling.assembly_process.views.AssemblyProcessView
 import ru.gozerov.presentation.screens.assembling.details.AssemblingDetailsFragment
 import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
+import java.io.File
 import java.io.IOException
 
 
@@ -67,6 +70,8 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
 
     private val _voiceControlState =
         MutableStateFlow<VoiceControlState>(VoiceControlState.Empty)
+
+    private val mediaPlayer = MediaPlayer()
 
     @OptIn(FlowPreview::class)
     private val voiceControlState: StateFlow<VoiceControlState>
@@ -98,6 +103,7 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
             requireContext().applicationContext,
             Manifest.permission.RECORD_AUDIO
         )
+
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
@@ -192,6 +198,8 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
         }
     }
 
+    private var isLoaded = false
+
     override fun onPause() {
         super.onPause()
         speechService?.stop()
@@ -202,11 +210,15 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
     private fun AssemblyProcessScreen() {
         val viewState = viewModel.viewState.collectAsState().value
         val effect =
-            viewModel.effects.collectAsState(initial = AssemblyProcessEffect.RecordOn()).value
+            viewModel.effects.collectAsState(initial = AssemblyProcessEffect.RecordOn(null)).value
         val currentStep = remember { mutableStateOf<AssemblyStep?>(null) }
         var isMenuVisible: Boolean by remember { mutableStateOf(false) }
         var isAudioPaused: Boolean by remember { mutableStateOf(false) }
         var isAudioOff: Boolean by remember { mutableStateOf(false) }
+
+        mediaPlayer.setOnCompletionListener {
+            isAudioPaused = true
+        }
 
         LaunchedEffect(key1 = null) {
             viewModel.handleIntent(AssemblyProcessIntent.LoadStep(args.assemblingId))
@@ -259,22 +271,48 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
         when (effect) {
             is AssemblyProcessEffect.RecordOff -> {
                 isAudioOff = true
+                mediaPlayer.pause()
             }
 
             is AssemblyProcessEffect.RecordOn -> {
                 isAudioOff = false
+                isAudioPaused = true
+                effect.componentName?.let { name ->
+                    val file = File(
+                        requireContext().applicationContext.filesDir,
+                        "$name.mp3"
+                    )
+                    if (!isLoaded) {
+                        mediaPlayer.setDataSource(
+                            requireContext().applicationContext,
+                            Uri.fromFile(file)
+                        )
+                        mediaPlayer.prepareAsync()
+                        isLoaded = true
+                    }
+                    mediaPlayer.apply {
+                        setOnPreparedListener {
+                            start()
+                        }
+                    }
+                }
             }
 
             is AssemblyProcessEffect.RecordPaused -> {
+                mediaPlayer.pause()
                 isAudioPaused = true
             }
 
             is AssemblyProcessEffect.RecordContinued -> {
                 isAudioPaused = false
+                if (!isAudioOff)
+                    mediaPlayer.start()
             }
 
             is AssemblyProcessEffect.RepeatRecord -> {
-
+                isAudioPaused = false
+                if (!isAudioOff)
+                    mediaPlayer.start()
             }
 
             is AssemblyProcessEffect.Navigate -> {

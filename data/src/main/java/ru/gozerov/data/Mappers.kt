@@ -26,7 +26,7 @@ fun AssemblingDTO.toAssembling() =
         components.map { it.toAssemblingComponent() })
 
 fun AssemblingComponentDTO.toAssemblingComponent() =
-    AssemblingComponent(componentId, name, amount, photoUrl, linkToSound)
+    AssemblingComponent(componentId, name, amount, photoUrl, "https://www.myinstants.com/media/sounds/goida-okhlobystin.mp3")
 
 fun ComponentDTO.toComponent() = Component(id, name, linkToImage, containers?.firstOrNull()?.room)
 
