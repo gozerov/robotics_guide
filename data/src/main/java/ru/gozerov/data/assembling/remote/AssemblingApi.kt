@@ -1,9 +1,11 @@
 package ru.gozerov.data.assembling.remote
 
 import okhttp3.MultipartBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -50,11 +52,12 @@ interface AssemblingApi {
         @Query("name") componentName: String
     )
 
+    @Multipart
     @POST("components/{component_id}/upload_photo")
     suspend fun uploadComponentPhoto(
         @Header("Authorization") bearer: String,
         @Path("component_id") id: Int,
-        @Part image: MultipartBody.Part? = null
-    )
+        @Part file: MultipartBody.Part? = null
+    ): Response<Unit>
 
 }

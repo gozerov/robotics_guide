@@ -39,37 +39,23 @@
         android:id="@+id/checkAvailabilityFragment"
         android:name="ru.gozerov.presentation.screens.assembling.check_availability.camera.CheckAvailabilityFragment"
         android:label="CheckAvailabilityFragment" >
-        <action
-            android:id="@+id/action_checkAvailabilityFragment_to_checkAvailabilityDialog"
-            app:destination="@id/checkAvailabilityDialog" />
         <argument
             android:name="neededComponents"
             app:argType="ru.gozerov.domain.models.assembling.AssemblingComponent[]" />
         <argument android:name="assemblingId"
             app:argType="integer" />
-    </fragment>
-    <dialog
-        android:id="@+id/checkAvailabilityDialog"
-        android:name="ru.gozerov.presentation.screens.assembling.check_availability.dialog_found.CheckAvailabilityDialog"
-        android:label="CheckAvailabilityDialog" >
-        <argument
-            android:name="components"
-            app:argType="ru.gozerov.presentation.screens.assembling.check_availability.dialog_found.ComponentWithNeed[]" />
         <action
-            android:id="@+id/action_checkAvailabilityDialog_to_compareTableDialog"
-            app:destination="@id/compareTableDialog" />
-        <argument
-            android:name="neededComponents"
-            app:argType="ru.gozerov.domain.models.assembling.AssemblingComponent[]" />
+            android:id="@+id/action_checkAvailabilityFragment_to_assemblyProcessFragment"
+            app:destination="@id/assemblyProcessFragment"
+            app:popUpTo="@id/checkAvailabilityFragment"
+            app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_checkAvailabilityDialog_to_lackOfComponentsDialog"
+            android:id="@+id/action_checkAvailabilityFragment_to_lackOfComponentsDialog"
             app:destination="@id/lackOfComponentsDialog" />
-        <argument android:name="assemblingId"
-            app:argType="integer" />
         <action
-            android:id="@+id/action_checkAvailabilityDialog_to_assemblyProcessFragment"
-            app:destination="@id/assemblyProcessFragment" />
-    </dialog>
+            android:id="@+id/action_checkAvailabilityFragment_to_compareTableDialog"
+            app:destination="@id/compareTableDialog" />
+    </fragment>
     <fragment
         android:id="@+id/assemblyProcessFragment"
         android:name="ru.gozerov.presentation.screens.assembling.assembly_process.AssemblyProcessFragment"
@@ -87,7 +73,7 @@
         android:label="CompareTableDialog" >
         <argument
             android:name="foundComponents"
-            app:argType="ru.gozerov.presentation.screens.assembling.check_availability.dialog_found.ComponentWithNeed[]" />
+            app:argType="ru.gozerov.domain.models.assembling.Component[]" />
         <argument
             android:name="neededComponents"
             app:argType="ru.gozerov.domain.models.assembling.AssemblingComponent[]" />
@@ -98,7 +84,9 @@
         android:label="LackOfComponentsDialog" >
         <action
             android:id="@+id/action_lackOfComponentsDialog_to_assemblyProcessFragment"
-            app:destination="@id/assemblyProcessFragment" />
+            app:destination="@id/assemblyProcessFragment"
+            app:popUpTo="@id/lackOfComponentsDialog"
+            app:popUpToInclusive="true" />
         <argument android:name="assemblingId"
             app:argType="integer" />
     </dialog>

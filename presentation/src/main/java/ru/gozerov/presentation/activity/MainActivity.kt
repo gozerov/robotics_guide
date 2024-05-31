@@ -4,9 +4,6 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
@@ -41,10 +38,10 @@ class MainActivity : AppCompatActivity() {
                         is MainActivityEffect.None -> {}
                         is MainActivityEffect.CheckedAuth -> {
                             if (!effect.isAuthorized) {
-                                    supportFragmentManager.setFragmentResult(
-                                        TabsFragment.REQUEST_KEY_LOG_OUT,
-                                        bundleOf()
-                                    )
+                                supportFragmentManager.setFragmentResult(
+                                    TabsFragment.REQUEST_KEY_LOG_OUT,
+                                    bundleOf()
+                                )
                             }
                         }
 

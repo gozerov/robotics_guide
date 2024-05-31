@@ -10,6 +10,6 @@ data class ComponentEntity(
     @PrimaryKey val id: Int,
     val name: String,
     val amount: Int,
-    @ColumnInfo(name = "link_to_photo") val photoUrl: String,
+    @ColumnInfo(name = "link_to_photo") val photoUrl: String?,
     @ColumnInfo(name = "link_to_sound") val linkToSound: String?
 )

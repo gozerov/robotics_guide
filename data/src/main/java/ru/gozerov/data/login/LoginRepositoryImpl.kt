@@ -1,7 +1,6 @@
 package ru.gozerov.data.login
 
 import retrofit2.HttpException
-import retrofit2.http.HTTP
 import ru.gozerov.data.login.cache.LoginStorage
 import ru.gozerov.data.login.remote.LabApi
 import ru.gozerov.data.login.remote.LoginApi
@@ -21,7 +20,7 @@ class LoginRepositoryImpl @Inject constructor(
         val user = labApi.getOwnUser(token, id)
         loginStorage.saveLabTokenAndId(token, id)
         val response = loginApi.login(user.toLoginRequestBody())
-        loginStorage.saveLoginTokens(response.accessToken, response.refreshToken)
+        loginStorage.saveLoginTokens(response.access_token, response.refresh_token)
     }
 
     override suspend fun getOwnProfile(): UserProfile {

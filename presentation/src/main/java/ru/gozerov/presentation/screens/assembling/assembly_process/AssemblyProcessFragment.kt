@@ -2,9 +2,7 @@ package ru.gozerov.presentation.screens.assembling.assembly_process
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -126,7 +124,6 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
                 recognizeMicrophone()
             },
             {
-                Log.e("AAA", it.stackTraceToString())
                 setErrorState()
             }
         )
@@ -203,11 +200,9 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
 
     @Composable
     private fun AssemblyProcessScreen() {
-        val mediaPlayer = MediaPlayer()
-
         val viewState = viewModel.viewState.collectAsState().value
         val effect =
-            viewModel.effect.collectAsState(initial = AssemblyProcessEffect.RecordOn()).value
+            viewModel.effects.collectAsState(initial = AssemblyProcessEffect.RecordOn()).value
         val currentStep = remember { mutableStateOf<AssemblyStep?>(null) }
         var isMenuVisible: Boolean by remember { mutableStateOf(false) }
         var isAudioPaused: Boolean by remember { mutableStateOf(false) }
@@ -262,37 +257,6 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
         }
 
         when (effect) {
-            is AssemblyProcessEffect.Navigate -> {
-                if (effect.isBack) {
-                    findNavController().popBackStack()
-                } else {
-                    if (currentStep.value?.isFinish == true) {
-                        parentFragmentManager.setFragmentResult(
-                            AssemblingDetailsFragment.PROCESS_END_REQUEST_KEY, bundleOf()
-                        )
-                        findNavController().popBackStack(R.id.assemblingDetailsFragment, false)
-                    } else {
-                        val action =
-                            AssemblyProcessFragmentDirections.actionAssemblyProcessFragmentSelf(
-                                args.assemblingId
-                            )
-                        findNavController().navigate(action)
-                    }
-                }
-            }
-
-            is AssemblyProcessEffect.LoadedSpeech -> {
-                val fileName = Environment.getExternalStorageDirectory().path + "/audio.mp3";
-
-                mediaPlayer.setDataSource(fileName)
-                try {
-                    mediaPlayer.setDataSource(fileName)
-                    mediaPlayer.prepare()
-                } catch (e: IOException) {
-                    viewModel.handleIntent(AssemblyProcessIntent.ShowError)
-                }
-            }
-
             is AssemblyProcessEffect.RecordOff -> {
                 isAudioOff = true
             }
@@ -311,6 +275,25 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
 
             is AssemblyProcessEffect.RepeatRecord -> {
 
+            }
+
+            is AssemblyProcessEffect.Navigate -> {
+                if (effect.isBack) {
+                    findNavController().popBackStack()
+                } else {
+                    if (currentStep.value?.isFinish == true) {
+                        parentFragmentManager.setFragmentResult(
+                            AssemblingDetailsFragment.PROCESS_END_REQUEST_KEY, bundleOf()
+                        )
+                        findNavController().popBackStack(R.id.assemblingDetailsFragment, false)
+                    } else {
+                        val action =
+                            AssemblyProcessFragmentDirections.actionAssemblyProcessFragmentSelf(
+                                args.assemblingId
+                            )
+                        findNavController().navigate(action)
+                    }
+                }
             }
         }
 

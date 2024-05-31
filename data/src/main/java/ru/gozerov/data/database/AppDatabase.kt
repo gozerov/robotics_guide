@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ru.gozerov.data.assembling.cache.dao.AssemblingComponentDao
-import ru.gozerov.data.assembling.cache.dao.AssemblingDao
-import ru.gozerov.data.assembling.cache.dao.ComponentDao
+import ru.gozerov.data.assembling.cache.AssemblingComponentDao
+import ru.gozerov.data.assembling.cache.AssemblingDao
+import ru.gozerov.data.assembling.cache.ComponentDao
 import ru.gozerov.data.assembling.cache.models.AssemblingComponentEntity
 import ru.gozerov.data.assembling.cache.models.AssemblingEntity
 import ru.gozerov.data.assembling.cache.models.ComponentEntity

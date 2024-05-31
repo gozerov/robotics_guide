@@ -2,13 +2,15 @@ package ru.gozerov.presentation.screens.assembling.list.models
 
 sealed interface AssemblingListIntent {
 
-    object LoadAssemblings: AssemblingListIntent
+    object CheckAuthorization : AssemblingListIntent
 
-    object LoadCategories: AssemblingListIntent
+    object LoadAssemblings : AssemblingListIntent
+
+    object LoadCategories : AssemblingListIntent
 
     class SearchAssembling(
         val query: String,
         val category: String
-    ): AssemblingListIntent
+    ) : AssemblingListIntent
 
 }

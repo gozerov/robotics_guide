@@ -1,5 +1,6 @@
 package ru.gozerov.presentation.screens.assembling.check_availability.lack_of_components
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -7,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.gozerov.presentation.databinding.DialogLackOfComponentsBinding
+import ru.gozerov.presentation.screens.assembling.check_availability.camera.CheckAvailabilityFragment
 
 class LackOfComponentsDialog : DialogFragment() {
 
@@ -42,8 +45,18 @@ class LackOfComponentsDialog : DialogFragment() {
             findNavController().navigate(action)
         }
         binding.dismissButton.setOnClickListener {
+            parentFragmentManager.setFragmentResult(
+                CheckAvailabilityFragment.REQUEST_KEY, bundleOf()
+            )
             dialog?.dismiss()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        parentFragmentManager.setFragmentResult(
+            CheckAvailabilityFragment.REQUEST_KEY, bundleOf()
+        )
+        super.onDismiss(dialog)
     }
 
 }

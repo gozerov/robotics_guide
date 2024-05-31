@@ -1,11 +1,10 @@
 package ru.gozerov.presentation.screens.assembling.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -37,6 +36,11 @@ import ru.gozerov.presentation.ui.theme.RoboticsGuideTheme
 class AssemblingListFragment : Fragment() {
 
     private val viewModel: AssemblingListViewModel by viewModels()
+
+    override fun onAttach(context: Context) {
+        viewModel.handleIntent(AssemblingListIntent.CheckAuthorization)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

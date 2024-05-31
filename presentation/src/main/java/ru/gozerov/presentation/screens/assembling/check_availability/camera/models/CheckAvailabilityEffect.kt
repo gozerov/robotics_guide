@@ -6,9 +6,17 @@ sealed interface CheckAvailabilityEffect {
 
     data object None: CheckAvailabilityEffect
 
-    data class ShowDialog(
+    data class ShowCheckAvailabilityDialog(
         val components: List<Component>
     ): CheckAvailabilityEffect
+
+    class ShowAllComponentsDialog(
+        val components: List<Component>
+    ): CheckAvailabilityEffect
+
+    class NavigateToProcess: CheckAvailabilityEffect
+
+    class NavigateToLackOfComponentsDialog: CheckAvailabilityEffect
 
     data class Error(
         val message: String

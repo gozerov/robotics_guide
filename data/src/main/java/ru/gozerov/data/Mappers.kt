@@ -34,7 +34,7 @@ fun ContainerDTO.toContainer() = Container(number, room, amount, componentId)
 
 fun Container.toContainerDTO() = ContainerDTO(number, room, amount, componentId)
 
-fun User.toLoginRequestBody() = LoginRequestBody(firstName, lastName, 1, email, phoneNumber)
+fun User.toLoginRequestBody() = LoginRequestBody(firstName, lastName, 1, "aaaa", "aaaa")
 
 fun User.toUserProfile() =
     UserProfile(id, firstName, lastName, "https://i.imgur.com/8OchAqD.png", 1)

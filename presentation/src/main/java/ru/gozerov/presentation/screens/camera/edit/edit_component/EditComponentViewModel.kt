@@ -1,5 +1,6 @@
 package ru.gozerov.presentation.screens.camera.edit.edit_component
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,6 +34,7 @@ class EditComponentViewModel @Inject constructor(
                             _effect.emit(EditComponentEffect.ShowDialog)
                         }
                         .onFailure {
+                            Log.e("AAAA", it.message.toString())
                             _effect.emit(EditComponentEffect.Error)
                         }
                 }

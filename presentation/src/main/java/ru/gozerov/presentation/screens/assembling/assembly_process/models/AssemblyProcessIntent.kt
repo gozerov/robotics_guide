@@ -4,20 +4,12 @@ sealed interface AssemblyProcessIntent {
 
     class LoadStep(val assemblingId: Int) : AssemblyProcessIntent
 
-    class LoadSpeech(
-        val componentId: Int,
-        val name: String,
-        val fileUrl: String
-    ) : AssemblyProcessIntent
-
     class MoveOnNext(val isBack: Boolean) : AssemblyProcessIntent
 
     class SetPause(val paused: Boolean) : AssemblyProcessIntent
 
     class SetEnabled(val enabled: Boolean) : AssemblyProcessIntent
 
-    class RepeatRecord : AssemblyProcessIntent
-
-    object ShowError : AssemblyProcessIntent
+    class RepeatRecord: AssemblyProcessIntent
 
 }

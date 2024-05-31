@@ -3,6 +3,7 @@ package ru.gozerov.presentation.screens.assembling.check_availability.camera
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,12 +39,36 @@ class CheckAvailabilityViewModel @Inject constructor(
                         getComponentByIdUseCase(intent.id)
                     }
                         .map { component ->
-                            components.add(component)
-                            _effect.emit(CheckAvailabilityEffect.ShowDialog(components.toList()))
+                            if (!components.contains(component)) {
+                                components.add(component)
+                                _effect.emit(
+                                    CheckAvailabilityEffect.ShowCheckAvailabilityDialog(
+                                        components.toList()
+                                    )
+                                )
+                            } else {
+                                delay(250)
+                                isCameraActive = true
+                            }
                         }
                         .onFailure {
                             _effect.emit(CheckAvailabilityEffect.Error(intent.id.toString()))
+                            isCameraActive = true
                         }
+                }
+
+                is CheckAvailabilityIntent.CalculateComponentsDiff -> {
+                    var isLack = false
+                    intent.neededComponents.forEach { component ->
+                        if (components.none { it.id == component.componentId }) {
+                            isLack = true
+                            return@forEach
+                        }
+                    }
+                    if (!isLack)
+                        _effect.emit(CheckAvailabilityEffect.NavigateToProcess())
+                    else
+                        _effect.emit(CheckAvailabilityEffect.NavigateToLackOfComponentsDialog())
                 }
 
                 is CheckAvailabilityIntent.SetCameraActive -> {
@@ -53,6 +78,11 @@ class CheckAvailabilityViewModel @Inject constructor(
                 is CheckAvailabilityIntent.ShowError -> {
                     isCameraActive = true
                     _effect.emit(CheckAvailabilityEffect.Error(intent.message))
+                }
+
+                is CheckAvailabilityIntent.ShowAllComponentsDialog -> {
+                    isCameraActive = false
+                    _effect.emit(CheckAvailabilityEffect.ShowAllComponentsDialog(components))
                 }
             }
         }

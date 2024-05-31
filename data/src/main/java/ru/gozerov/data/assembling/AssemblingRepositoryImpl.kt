@@ -3,13 +3,11 @@ package ru.gozerov.data.assembling
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import ru.gozerov.data.assembling.cache.AssemblingStorage
 import ru.gozerov.data.assembling.remote.AssemblingApi
 import ru.gozerov.data.login.cache.LoginStorage
@@ -24,12 +22,8 @@ import ru.gozerov.domain.models.assembling.Container
 import ru.gozerov.domain.models.assembling.FilterCategory
 import ru.gozerov.domain.models.assembling.SimpleAssembling
 import ru.gozerov.domain.repositories.AssemblingRepository
-import java.io.File
-import java.io.FileOutputStream
-import java.net.HttpURLConnection
-import java.net.URL
+import java.io.InputStream
 import javax.inject.Inject
-
 
 class AssemblingRepositoryImpl @Inject constructor(
     private val assemblingApi: AssemblingApi,
@@ -138,41 +132,15 @@ class AssemblingRepositoryImpl @Inject constructor(
         assemblingApi.updateContainer(bearer, container.toContainerDTO())
     }
 
-    override suspend fun loadSpeech(componentId: Int, name: String, speechUrl: String) =
-        withContext(Dispatchers.IO) {
-            try {
-                val url = URL(speechUrl)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.connect()
-
-                val fileName = "${name}_${componentId}"
-                val inputStream = connection.inputStream
-                val outputStream = FileOutputStream(fileName)
-
-                val buffer = ByteArray(1024)
-                var bytesRead: Int
-                while ((inputStream.read(buffer).also { bytesRead = it }) != -1) {
-                    outputStream.write(buffer, 0, bytesRead)
-                }
-
-                outputStream.close()
-                inputStream.close()
-                connection.disconnect()
-            } catch (e: Exception) {
-                throw IllegalArgumentException("bad link")
-            }
-        }
-
     private fun getImagePart(imageUri: Uri?): MultipartBody.Part? {
         var part: MultipartBody.Part? = null
         imageUri?.let { uri ->
-            val filesDir = context.filesDir
-            val file = File(filesDir, "image.png")
-            val inputStream = context.contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(file)
-            inputStream?.copyTo(outputStream)
-            val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-            part = MultipartBody.Part.createFormData("image", file.name, requestBody)
+            val mimeType = context.contentResolver.getType(uri)
+            val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+            val bytes = inputStream?.readBytes() ?: return null
+            inputStream.close()
+            val requestBody = bytes.toRequestBody(mimeType?.toMediaTypeOrNull())
+            part = MultipartBody.Part.createFormData("file", "file.jpeg", requestBody)
         }
         return part
     }

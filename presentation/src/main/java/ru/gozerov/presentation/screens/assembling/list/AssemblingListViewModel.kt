@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import ru.gozerov.domain.use_cases.GetAssemblingListUseCase
 import ru.gozerov.domain.use_cases.GetCategoriesUseCase
 import ru.gozerov.domain.use_cases.SearchAssemblingUseCase
+import ru.gozerov.domain.use_cases.UpdateAuthorizationUseCase
 import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListEffect
 import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListIntent
 import ru.gozerov.presentation.screens.assembling.list.models.AssemblingListViewState
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class AssemblingListViewModel @Inject constructor(
     private val getAssemblingListUseCase: GetAssemblingListUseCase,
     private val searchAssemblingUseCase: SearchAssemblingUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val updateAuthorizationUseCase: UpdateAuthorizationUseCase
 ) : ViewModel() {
 
     private val _viewState =
@@ -35,6 +37,20 @@ class AssemblingListViewModel @Inject constructor(
     fun handleIntent(intent: AssemblingListIntent) {
         viewModelScope.launch {
             when (intent) {
+                is AssemblingListIntent.CheckAuthorization -> {
+                    runCatchingNonCancellation {
+                        updateAuthorizationUseCase.invoke()
+                    }
+                        .onSuccess {  isAuthorized ->
+                            if (!isAuthorized) {
+                                _viewState.emit(AssemblingListViewState.Error)
+                                _effect.emit(AssemblingListEffect.NavigateToProfile)
+                            }
+                        }
+                        .onFailure {
+                            _viewState.emit(AssemblingListViewState.Error)
+                        }
+                }
                 is AssemblingListIntent.LoadAssemblings -> {
                     runCatchingNonCancellation {
                         getAssemblingListUseCase.invoke()

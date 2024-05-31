@@ -2,8 +2,6 @@ package ru.gozerov.presentation.screens.assembling.assembly_process.models
 
 sealed interface AssemblyProcessEffect {
 
-    class LoadedSpeech : AssemblyProcessEffect
-
     class RecordPaused : AssemblyProcessEffect
 
     class RecordContinued : AssemblyProcessEffect
