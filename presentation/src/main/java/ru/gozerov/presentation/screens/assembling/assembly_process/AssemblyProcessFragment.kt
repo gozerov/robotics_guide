@@ -98,7 +98,8 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onResume() {
+        super.onResume()
         val permissionCheck = ContextCompat.checkSelfPermission(
             requireContext().applicationContext,
             Manifest.permission.RECORD_AUDIO
@@ -120,7 +121,6 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
         ) { _, _ ->
             initModel()
         }
-
     }
 
     private fun initModel() {
@@ -168,8 +168,9 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
                 )
             )
                 _voiceControlState.tryEmit(VoiceControlState.Back())
-            else if (it.contains(getString(R.string._repeat)))
-                _voiceControlState.tryEmit(VoiceControlState.Repeat())
+            else if (it.contains(getString(R.string._repeat))) {
+                _voiceControlState.tryEmit(VoiceControlState.Repeat)
+            }
         }
     }
 
@@ -222,6 +223,7 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
 
         LaunchedEffect(key1 = null) {
             viewModel.handleIntent(AssemblyProcessIntent.LoadStep(args.assemblingId))
+            viewModel.handleIntent(AssemblyProcessIntent.SetPause(false))
         }
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -263,12 +265,18 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
             is AssemblyProcessViewState.Empty -> {}
             is AssemblyProcessViewState.LoadedStep -> {
                 currentStep.value = viewState.step
+                if (!isAudioOff) {
+                    viewModel.handleIntent(AssemblyProcessIntent.SetPause(false))
+                }
+
             }
 
             is AssemblyProcessViewState.Error -> {}
         }
 
         when (effect) {
+            is AssemblyProcessEffect.None -> {}
+
             is AssemblyProcessEffect.RecordOff -> {
                 isAudioOff = true
                 mediaPlayer.pause()
@@ -295,6 +303,8 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
                             start()
                         }
                     }
+                    viewModel.handleIntent(AssemblyProcessIntent.Empty)
+                    _voiceControlState.tryEmit(VoiceControlState.Empty)
                 }
             }
 
@@ -304,15 +314,22 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
             }
 
             is AssemblyProcessEffect.RecordContinued -> {
-                isAudioPaused = false
-                if (!isAudioOff)
+                if (!isAudioOff && isAudioPaused) {
+                    Log.e("AAAA", "aasaadaa")
+                    isAudioPaused = false
+                    viewModel.handleIntent(AssemblyProcessIntent.Empty)
+                    _voiceControlState.tryEmit(VoiceControlState.Empty)
                     mediaPlayer.start()
+                }
             }
 
             is AssemblyProcessEffect.RepeatRecord -> {
                 isAudioPaused = false
-                if (!isAudioOff)
+                if (!isAudioOff) {
+                    viewModel.handleIntent(AssemblyProcessIntent.Empty)
+                    _voiceControlState.tryEmit(VoiceControlState.Empty)
                     mediaPlayer.start()
+                }
             }
 
             is AssemblyProcessEffect.Navigate -> {
@@ -343,7 +360,8 @@ class AssemblyProcessFragment : Fragment(), RecognitionListener {
             }
 
             is VoiceControlState.Continue -> {
-                viewModel.handleIntent(AssemblyProcessIntent.SetPause(false))
+                if (isAudioPaused)
+                    viewModel.handleIntent(AssemblyProcessIntent.SetPause(false))
             }
 
             is VoiceControlState.On -> {

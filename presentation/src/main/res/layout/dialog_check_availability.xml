@@ -7,21 +7,27 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_component_dialog"
     android:orientation="vertical"
-    android:paddingVertical="@dimen/_32dp"
+    android:paddingVertical="@dimen/_16dp"
     android:scrollbars="none"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <View
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_4dp"
+            android:background="@drawable/bg_dialog_tongue"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/calculateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_32dp"
-            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_32dp"
             android:background="@drawable/bg_calculate_button"
             android:drawablePadding="@dimen/_8dp"
             android:text="@string/to_calculate"

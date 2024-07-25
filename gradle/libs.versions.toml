@@ -24,7 +24,7 @@ compose-bom = "2024.04.00"
 compose-material = "1.6.5"
 zxing = "4.3.0"
 vosk-android = "0.3.32"
-permissions = "0.35.0-alpha"
+permissions = "0.34.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +63,7 @@ androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", versi
 androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose-material" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "compose-material"}
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }

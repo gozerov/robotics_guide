@@ -10,7 +10,11 @@
         android:label="TabsFragment" >
         <action
             android:id="@+id/action_tabsFragment_to_assemblingDetailsFragment"
-            app:destination="@id/assemblingDetailsFragment" />
+            app:destination="@id/assemblingDetailsFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
         <action
             android:id="@+id/action_tabsFragment_to_loginWebViewFragment"
             app:destination="@id/loginWebViewFragment" />
@@ -30,10 +34,18 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_assemblingDetailsFragment_to_checkAvailabilityFragment"
-            app:destination="@id/checkAvailabilityFragment" />
+            app:destination="@id/checkAvailabilityFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
         <action
             android:id="@+id/action_assemblingDetailsFragment_to_assemblyProcessFragment"
-            app:destination="@id/assemblyProcessFragment" />
+            app:destination="@id/assemblyProcessFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/checkAvailabilityFragment"
@@ -62,7 +74,11 @@
         android:label="AssemblyProcessFragment" >
         <action
             android:id="@+id/action_assemblyProcessFragment_self"
-            app:destination="@id/assemblyProcessFragment" />
+            app:destination="@id/assemblyProcessFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/nav_pop_exit" />
         <argument
             android:name="assemblingId"
             app:argType="integer" />

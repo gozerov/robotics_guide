@@ -41,7 +41,7 @@
     <string name="oops">Ой!</string>
     <string name="are_you_sure_to_continue">Найдены не все компоненты.\nВы уверены, что хотите \nпродолжить?</string>
     <string name="back_and_dismiss">Вернуться</string>
-    <string name="details_count_is">Деталей:\\n%1$d шт</string>
+    <string name="details_count_is">Деталей: \n%1$d шт</string>
     <string name="saved_assemblings_available_auth">Сохранённые сборки доступны только авторизованным пользователям</string>
     <string name="input_component_name">Введите название детали</string>
     <string name="take_photo">Сфотографируйте деталь</string>
@@ -57,4 +57,7 @@
     <string name="back_1">назад</string>
     <string name="back_2">предыду</string>
     <string name="back_3">обратно</string>
+    <string name="creator">Сборщик</string>
+    <string name="admin">Админ</string>
+    <string name="undefined">undefined</string>
 </resources>

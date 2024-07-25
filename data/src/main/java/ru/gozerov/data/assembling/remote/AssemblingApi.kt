@@ -30,6 +30,7 @@ interface AssemblingApi {
     @PATCH("containers/{container_number}")
     suspend fun updateContainer(
         @Header("Authorization") bearer: String,
+        @Path("container_number") number: String,
         @Body containerDTO: ContainerDTO
     )
 

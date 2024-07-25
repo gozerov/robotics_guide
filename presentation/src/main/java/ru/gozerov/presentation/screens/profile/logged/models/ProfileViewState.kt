@@ -4,12 +4,12 @@ import ru.gozerov.domain.models.login.UserProfile
 
 sealed interface ProfileViewState {
 
-    object Empty: ProfileViewState
+    object Empty : ProfileViewState
 
     class LoadedProfile(
         val userProfile: UserProfile
-    ): ProfileViewState
+    ) : ProfileViewState
 
-    object Error: ProfileViewState
+    object Error : ProfileViewState
 
 }

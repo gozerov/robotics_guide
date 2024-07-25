@@ -169,7 +169,8 @@ class EditContainerFragment : Fragment() {
                             componentId.value.toIntOrNull()?.let { id ->
                                 viewModel.handleIntent(
                                     EditContainerIntent.SaveChanges(
-                                        args.container.copy(
+                                        number = args.container.number,
+                                        container = args.container.copy(
                                             number = containerNumber.value,
                                             room = room.value,
                                             componentId = id

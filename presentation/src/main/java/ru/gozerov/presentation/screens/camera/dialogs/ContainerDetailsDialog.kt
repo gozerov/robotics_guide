@@ -31,8 +31,10 @@ class ContainerDetailsDialog : BottomSheetDialogFragment() {
         binding.txtDetailsCount.text = getString(R.string.details_count_is, args.container.amount)
 
         binding.editButton.setOnClickListener {
-            val action = TabsFragmentDirections.actionTabsFragmentToEditContainerFragment(args.container)
-            activity?.supportFragmentManager?.findFragmentById(R.id.globalFragmentContainer)?.findNavController()?.navigate(action)
+            val action =
+                TabsFragmentDirections.actionTabsFragmentToEditContainerFragment(args.container)
+            activity?.supportFragmentManager?.findFragmentById(R.id.globalFragmentContainer)
+                ?.findNavController()?.navigate(action)
         }
         return binding.root
     }

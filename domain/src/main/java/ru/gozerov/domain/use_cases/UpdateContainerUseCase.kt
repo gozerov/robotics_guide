@@ -8,8 +8,8 @@ class UpdateContainerUseCase @Inject constructor(
     private val assemblingRepository: AssemblingRepository
 ) {
 
-    suspend operator fun invoke(container: Container) {
-        assemblingRepository.updateContainer(container)
+    suspend operator fun invoke(number: String, container: Container) {
+        assemblingRepository.updateContainer(number, container)
     }
 
 }

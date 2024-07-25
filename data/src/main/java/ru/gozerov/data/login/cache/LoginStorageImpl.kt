@@ -34,6 +34,10 @@ class LoginStorageImpl @Inject constructor(
     override fun getLabId(): String? =
         sharedPreferences.getString(KEY_LAB_ID, null)
 
+    override fun getRefreshToken(): String? =
+        sharedPreferences.getString(KEY_REFRESH_TOKEN, null)
+
+
     override fun clear() {
         sharedPreferences
             .edit()

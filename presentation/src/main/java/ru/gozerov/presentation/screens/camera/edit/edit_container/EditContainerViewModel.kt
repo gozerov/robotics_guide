@@ -27,7 +27,7 @@ class EditContainerViewModel @Inject constructor(
             when (intent) {
                 is EditContainerIntent.SaveChanges -> {
                     runCatchingNonCancellation {
-                        updateContainerUseCase.invoke(intent.container)
+                        updateContainerUseCase.invoke(intent.number, intent.container)
                     }
                         .map {
                             _effect.emit(EditContainerEffect.ShowDialog)

@@ -135,9 +135,9 @@ class AssemblingRepositoryImpl @Inject constructor(
         return assemblingApi.getContainer(bearer, number).toContainer()
     }
 
-    override suspend fun updateContainer(container: Container) {
+    override suspend fun updateContainer(number: String, container: Container) {
         val bearer = "Bearer ${loginStorage.getAccessToken()}"
-        assemblingApi.updateContainer(bearer, container.toContainerDTO())
+        assemblingApi.updateContainer(bearer, number, container.toContainerDTO())
     }
 
     private fun getImagePart(imageUri: Uri?): MultipartBody.Part? {

@@ -4,8 +4,11 @@ import ru.gozerov.domain.models.assembling.Container
 
 sealed interface EditContainerIntent {
 
-    class SaveChanges(val container: Container) : EditContainerIntent
+    class SaveChanges(
+        val number: String,
+        val container: Container
+    ) : EditContainerIntent
 
-    class ShowError: EditContainerIntent
+    class ShowError : EditContainerIntent
 
 }

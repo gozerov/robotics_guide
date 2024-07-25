@@ -1,5 +1,6 @@
 package ru.gozerov.presentation.screens.assembling.list.views
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -39,7 +40,10 @@ fun SearchAssemblingView(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val menuInteractionSource = remember { MutableInteractionSource() }
-    Column {
+    Column(
+        modifier = Modifier
+            .animateContentSize()
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

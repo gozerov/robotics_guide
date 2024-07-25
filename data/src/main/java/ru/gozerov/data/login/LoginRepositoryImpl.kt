@@ -53,6 +53,19 @@ class LoginRepositoryImpl @Inject constructor(
             return true
         } catch (e: HttpException) {
             if (e.code() == 401) {
+                val refreshToken = loginStorage.getRefreshToken()
+                refreshToken?.let { token ->
+                    try {
+                        val response = loginApi.refresh(token)
+                        loginStorage.saveLoginTokens(response.access_token, token)
+                        return true
+                    } catch (e: HttpException) {
+                        if (e.code() == 401) {
+                            logout()
+                            return false
+                        }
+                    }
+                }
                 logout()
                 return false
             }

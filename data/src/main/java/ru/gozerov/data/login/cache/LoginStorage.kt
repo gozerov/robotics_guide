@@ -12,6 +12,8 @@ interface LoginStorage {
 
     fun getLabId(): String?
 
+    fun getRefreshToken(): String?
+
     fun clear()
 
     fun getAccessToken(): String

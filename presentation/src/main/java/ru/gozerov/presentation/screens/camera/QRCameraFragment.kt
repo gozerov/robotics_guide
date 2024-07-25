@@ -26,7 +26,7 @@ class QRCameraFragment : Fragment() {
 
     private val viewModel: QRCameraViewModel by viewModels()
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,16 +45,8 @@ class QRCameraFragment : Fragment() {
                     R.id.nav_camera
                 )
             ) {
-                try {
-                    val id = result.text.toIntOrNull()
-                    id?.let {
-                        viewModel.handleIntent(QRCameraIntent.ShowComponent(id))
-                        //viewModel.handleIntent(QRCameraIntent.ShowContainer(result.text))
-                        viewModel.handleIntent(QRCameraIntent.SetCameraActive(false))
-                    } ?: viewModel.handleIntent(QRCameraIntent.ShowError("message"))
-                } catch (e: Exception) {
-                    viewModel.handleIntent(QRCameraIntent.ShowError(id.toString()))
-                }
+                if (viewModel.lastScanned != result.text)
+                    viewModel.handleIntent(QRCameraIntent.ObtainQR(result.text))
             }
         }
 
@@ -68,8 +60,8 @@ class QRCameraFragment : Fragment() {
                                 QRCameraFragmentDirections.actionNavCameraToComponentDetailsDialog(
                                     effect.component
                                 )
-                            viewModel.handleIntent(QRCameraIntent.Navigate)
                             findNavController().navigate(action)
+                            viewModel.handleIntent(QRCameraIntent.Navigate)
                         }
 
                         is QRCameraEffect.ShowContainer -> {
@@ -78,6 +70,7 @@ class QRCameraFragment : Fragment() {
                                     effect.container
                                 )
                             findNavController().navigate(action)
+                            viewModel.handleIntent(QRCameraIntent.Navigate)
                         }
 
                         is QRCameraEffect.Error -> {
@@ -101,6 +94,7 @@ class QRCameraFragment : Fragment() {
 
     override fun onResume() {
         binding.barCodeView.resume()
+        viewModel.lastScanned = ""
         super.onResume()
     }
 

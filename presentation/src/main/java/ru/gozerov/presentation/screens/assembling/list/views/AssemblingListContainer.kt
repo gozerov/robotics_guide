@@ -2,6 +2,8 @@ package ru.gozerov.presentation.screens.assembling.list.views
 
 import android.annotation.SuppressLint
 import androidx.annotation.StringRes
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -22,8 +24,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -47,6 +52,10 @@ fun AssemblingListContainer(
     onCardClick: (id: Int) -> Unit,
     onCategoryChanged: () -> Unit
 ) {
+    val isSearchVisible = rememberSaveable { mutableStateOf(searchFieldState.value.isNotBlank()) }
+    LaunchedEffect(searchFieldState.value) {
+        isSearchVisible.value = searchFieldState.value.isNotBlank()
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = RoboticsGuideTheme.colors.surfaceVariant
@@ -60,21 +69,22 @@ fun AssemblingListContainer(
                 onSearchTextChanged = onSearchTextChanged,
                 hintStringRes = R.string.search
             )
-            if (searchFieldState.value.isNotBlank()) {
-                SearchAssemblingView(
-                    assemblings = searchedAssemblings,
-                    categories = categories,
-                    currentCategory = currentCategory,
-                    onCardClick = onCardClick,
-                    onCategoryChanged = onCategoryChanged
-                )
-            } else
-                AssemblingListView(
+            Crossfade(targetState = isSearchVisible.value, label = "") { isVisible ->
+                if (isVisible) {
+                    SearchAssemblingView(
+                        assemblings = searchedAssemblings,
+                        categories = categories,
+                        currentCategory = currentCategory,
+                        onCardClick = onCardClick,
+                        onCategoryChanged = onCategoryChanged
+                    )
+                } else AssemblingListView(
                     newAssemblings = newAssemblings,
                     allAssemblings = allAssemblings,
                     parentPaddingValues = paddingValues,
                     onCardClick = onCardClick
                 )
+            }
         }
     }
 }

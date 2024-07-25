@@ -26,7 +26,7 @@ fun AssemblingDTO.toAssembling() =
         components.map { it.toAssemblingComponent() })
 
 fun AssemblingComponentDTO.toAssemblingComponent() =
-    AssemblingComponent(componentId, name, amount, photoUrl, "https://www.myinstants.com/media/sounds/goida-okhlobystin.mp3")
+    AssemblingComponent(componentId, name, amount, photoUrl, linkToSound)
 
 fun ComponentDTO.toComponent() = Component(id, name, linkToImage, containers?.firstOrNull()?.room)
 
@@ -34,13 +34,16 @@ fun ContainerDTO.toContainer() = Container(number, room, amount, componentId)
 
 fun Container.toContainerDTO() = ContainerDTO(number, room, amount, componentId)
 
-fun User.toLoginRequestBody() = LoginRequestBody(firstName, lastName, 1, "aaaa", "aaaa")
+fun User.toLoginRequestBody() = LoginRequestBody(firstName, lastName, 1, email, phoneNumber)
 
 fun User.toUserProfile() =
-    UserProfile(id, firstName, lastName, "https://i.imgur.com/8OchAqD.png", 1)
+    UserProfile(id, firstName, lastName,"https://i.imgur.com/8OchAqD.png", 1)
 
-fun AssemblingDTO.toAssemblingEntity() = AssemblingEntity(id, name, instruction, readyAmount, linkToProject, linkToSound, userId)
+fun AssemblingDTO.toAssemblingEntity() =
+    AssemblingEntity(id, name, instruction, readyAmount, linkToProject, linkToSound, userId)
 
-fun AssemblingComponentDTO.toComponentEntity() = ComponentEntity(componentId, name, amount, photoUrl, linkToSound)
+fun AssemblingComponentDTO.toComponentEntity() =
+    ComponentEntity(componentId, name, amount, photoUrl, linkToSound)
 
-fun ComponentEntity.toAssemblingComponent() = AssemblingComponent(id, name, amount, photoUrl, linkToSound)
+fun ComponentEntity.toAssemblingComponent() =
+    AssemblingComponent(id, name, amount, photoUrl, linkToSound)

@@ -8,7 +8,7 @@ sealed interface VoiceControlState {
 
     class Continue: VoiceControlState
 
-    class Repeat: VoiceControlState
+    data object Repeat: VoiceControlState
 
     class Off: VoiceControlState
 

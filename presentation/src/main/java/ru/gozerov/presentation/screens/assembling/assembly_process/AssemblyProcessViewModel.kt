@@ -39,6 +39,11 @@ class AssemblyProcessViewModel @Inject constructor(
     fun handleIntent(intent: AssemblyProcessIntent) {
         viewModelScope.launch {
             when (intent) {
+                is AssemblyProcessIntent.Empty -> {
+                    _viewState.emit(AssemblyProcessViewState.Empty)
+                    _effects.emit(AssemblyProcessEffect.None)
+                }
+
                 is AssemblyProcessIntent.LoadStep -> {
                     runCatchingNonCancellation {
                         getCurrentStepUseCase(intent.assemblingId)

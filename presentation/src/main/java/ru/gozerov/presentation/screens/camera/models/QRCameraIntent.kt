@@ -2,14 +2,10 @@ package ru.gozerov.presentation.screens.camera.models
 
 sealed interface QRCameraIntent {
 
-    object Navigate: QRCameraIntent
+    object Navigate : QRCameraIntent
 
-    class ShowComponent(
-        val id: Int
-    ) : QRCameraIntent
-
-    class ShowContainer(
-        val number: String
+    class ObtainQR(
+        val text: String
     ) : QRCameraIntent
 
     class SetCameraActive(

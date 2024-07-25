@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.compose.activity)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling)

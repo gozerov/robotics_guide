@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.gozerov.domain.use_cases.GetComponentByIdUseCase
@@ -23,37 +23,50 @@ class QRCameraViewModel @Inject constructor(
     private val _effect =
         MutableStateFlow<QRCameraEffect>(QRCameraEffect.None)
 
-    val effect: SharedFlow<QRCameraEffect>
+    val effect: StateFlow<QRCameraEffect>
         get() = _effect.asStateFlow()
 
     var isCameraActive = true
         private set
 
+    var lastScanned: String = ""
+
     fun handleIntent(intent: QRCameraIntent) {
         viewModelScope.launch {
             when (intent) {
-                is QRCameraIntent.ShowComponent -> {
-                    runCatchingNonCancellation {
-                        getComponentByIdUseCase(intent.id)
+                is QRCameraIntent.ObtainQR -> {
+                    try {
+                        val regex =
+                            "https://assemble\\.rtuitlab\\.dev/(container|component)/(\\w+)".toRegex()
+                        lastScanned = intent.text
+                        val matchResult = regex.find(intent.text)
+                        val nullableId = matchResult?.groupValues?.get(2)
+                        nullableId?.let { id ->
+                            if (intent.text.contains("container")) {
+                                runCatchingNonCancellation {
+                                    getContainerByIdUseCase.invoke(id)
+                                }
+                                    .onSuccess { container ->
+                                        _effect.emit(QRCameraEffect.ShowContainer(container))
+                                    }
+                                    .onFailure {
+                                        _effect.emit(QRCameraEffect.Error(id))
+                                    }
+                            } else if (intent.text.contains("component") && id.toIntOrNull() != null) {
+                                runCatchingNonCancellation {
+                                    getComponentByIdUseCase.invoke(id.toInt())
+                                }
+                                    .onSuccess { component ->
+                                        _effect.emit(QRCameraEffect.ShowComponent(component))
+                                    }
+                                    .onFailure {
+                                        _effect.emit(QRCameraEffect.Error(id))
+                                    }
+                            } else return@let
+                        }
+                    } catch (e: Exception) {
+                        _effect.emit(QRCameraEffect.Error("error"))
                     }
-                        .map { component ->
-                            _effect.emit(QRCameraEffect.ShowComponent(component))
-                        }
-                        .onFailure {
-                            _effect.emit(QRCameraEffect.Error(intent.id.toString()))
-                        }
-                }
-
-                is QRCameraIntent.ShowContainer -> {
-                    runCatchingNonCancellation {
-                        getContainerByIdUseCase(intent.number)
-                    }
-                        .map { container ->
-                            _effect.emit(QRCameraEffect.ShowContainer(container))
-                        }
-                        .onFailure {
-                            _effect.emit(QRCameraEffect.Error(intent.number))
-                        }
                 }
 
                 is QRCameraIntent.SetCameraActive -> {

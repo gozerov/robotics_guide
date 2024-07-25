@@ -29,6 +29,6 @@ interface AssemblingRepository {
 
     suspend fun getContainerById(number: String): Container
 
-    suspend fun updateContainer(container: Container)
+    suspend fun updateContainer(number: String, container: Container)
 
 }

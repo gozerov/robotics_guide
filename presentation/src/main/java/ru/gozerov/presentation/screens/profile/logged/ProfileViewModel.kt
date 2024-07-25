@@ -11,7 +11,6 @@ import ru.gozerov.domain.use_cases.GetOwnProfileUseCase
 import ru.gozerov.domain.use_cases.LogoutUseCase
 import ru.gozerov.presentation.screens.profile.logged.models.ProfileIntent
 import ru.gozerov.presentation.screens.profile.logged.models.ProfileViewState
-import ru.gozerov.presentation.screens.profile.logged.models.Role
 import ru.gozerov.presentation.utils.runCatchingNonCancellation
 import javax.inject.Inject
 
