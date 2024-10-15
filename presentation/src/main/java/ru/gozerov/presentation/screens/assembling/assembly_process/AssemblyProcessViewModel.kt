@@ -48,7 +48,7 @@ class AssemblyProcessViewModel @Inject constructor(
                     runCatchingNonCancellation {
                         getCurrentStepUseCase(intent.assemblingId)
                     }
-                        .map { step ->
+                        .onSuccess { step ->
                             _effects.emit(AssemblyProcessEffect.RecordOn(step.container.name))
                             _viewState.emit(AssemblyProcessViewState.LoadedStep(step))
                         }
